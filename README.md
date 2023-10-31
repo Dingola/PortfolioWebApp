@@ -2,6 +2,11 @@
 
 Welcome to my Portfolio Web App! This project is built using Node.js and Express and serves as a showcase of my work and skills. Please follow the instructions below to set up your development environment and run the app.
 
+## Table of Contents
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+
 ## Installation
 
 1. **Install Node.js**: If you don't have Node.js installed, you can download and install it from [nodejs.org](https://nodejs.org/en/download/).
