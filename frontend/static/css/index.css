@@ -1,0 +1,94 @@
+/* BEM ( Blocks, Elements, Modifiers ) methodology */
+
+/* >> RESET << */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* >> VARIABLES << */
+
+:root {
+    /* BASE SIZES */
+    --base-size: 1.5625vw; /* 1.5625vw == 30px for 1920 viewport width */
+    --base-font-size: 0.5vw + 0.5vh;
+
+    /* RGB COLORS */
+    --color-1: rgb(38, 41, 47);
+    --color-2: rgb(47, 46, 57);
+    --color-3: rgb(146, 146, 146);
+    --color-4: rgb(0, 149, 121);
+}
+
+/* >> GENERAL STYLES << */
+
+html {
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    height: 10vh;
+    background-color: var(--color-2);
+}
+
+footer {
+    height: 20vh;
+    background-color: var(--color-2);
+}
+
+nav {
+    display: flex;
+    padding-right: calc(15% + var(--base-size));
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    height: 100%;
+}
+
+a {
+    color: var(--color-4);
+    font-size: calc(0.2rem + var(--base-font-size));
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-3);
+    font-weight: bold;
+}
+
+h1 {
+    font-size: calc(1rem + var(--base-font-size));
+}
+
+p {
+    color: var(--color-3);
+    font-size: calc(0.1rem + var(--base-font-size));
+}
+
+/* >> UTILITY CLASSES << */
+
+/* >> BLOCKS / COMPONENTS << */
+
+#app {
+    min-height: 90vh;
+    width: 100%;
+    background-color: var(--color-1);
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+    padding: 25px;
+    background-color: var(--color-1);
+
+    > div {
+        padding: calc(5% + var(--base-size));
+    }
+}
+
+/* >> ELEMENTS << */
+
+/* >> MODIFIERS << */
