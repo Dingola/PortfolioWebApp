@@ -10,13 +10,14 @@ export default class
         document.title = "Portfolio | " + title;
     }
 
-    set_content_html(content_html)
+    async generate_html(content) 
     {
-        this.content_html = `<div class="content">` + content_html + `</div>`;
+        return `<div class="content">` + content + `</div>`;
     }
     
-    async get_html()
+    
+    async get_html() 
     {
-        return this.content_html;
+        return this.generate_html('');
     }
 }

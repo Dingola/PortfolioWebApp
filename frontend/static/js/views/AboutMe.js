@@ -5,7 +5,7 @@ export default class extends AbstractView
     constructor(params)
     {
         super(params);
-        this.set_title("Contact");
+        this.set_title("AboutMe");
     }
 
     async get_html() 
@@ -14,7 +14,7 @@ export default class extends AbstractView
             <div class="">
                 <div>
                     <h1>Single Page App</h1>
-                    <p>Contact</p>
+                    <p>About</p>
                 </div>
             </div>
         `);

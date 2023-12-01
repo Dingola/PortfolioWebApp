@@ -1,11 +1,15 @@
 // Import various views used in the application.
 import Home from "./views/Home.js";
 import Contact from "./views/Contact.js";
+import AboutMe from "./views/AboutMe.js";
+
+import { set_active_nav_link } from "./nav.js";
 
 // Define routes for the application, mapping paths to their associated views.
 const routes = [
     { path: "/", view: Home },
-    { path: "/contact", view: Contact }
+    { path: "/contact", view: Contact },
+    { path: "/about", view: AboutMe }
 ];
 
 // Helper function to convert a path into a regular expression for route matching.
@@ -41,6 +45,13 @@ const router = async () => {
 
     const view = new match.route.view(get_params(match));
     document.querySelector("#app").innerHTML = await view.get_html();
+    window.scrollTo(0, 0);
+    set_active_nav_link();
+
+    // VanillaTilt.init(document.querySelector(".border_circle"), {
+    //     max: 25,
+    //     speed: 600
+    // });
 };
 
 // Add an event listener to handle changes in the browser's history (e.g., back/forward buttons).
@@ -50,7 +61,8 @@ window.addEventListener("popstate", router);
 document.addEventListener("DOMContentLoaded", () => {
     // Add a click event listener to handle links with the "data-link" attribute.
     document.body.addEventListener("click", e => {
-        if (e.target.matches("[data-link]")) {
+        if (e.target.matches("[data-link]")) 
+        {
             e.preventDefault();
             navigate_to(e.target.href);
         }
@@ -59,3 +71,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize the routing function when the DOM is ready.
     router();
 });
+

@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const rating_routes = require('./routes/RatingRouter');
 
 const app = express();
 
@@ -12,7 +13,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+app.use(express.static(__dirname + '/node_modules'));
+app.use('/api', rating_routes.routes);
 app.use("/static", express.static(path.resolve(__dirname, "frontend", "static")));
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "index.html"));
