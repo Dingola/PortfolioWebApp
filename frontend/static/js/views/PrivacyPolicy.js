@@ -5,7 +5,7 @@ export default class extends AbstractView
     constructor(params)
     {
         super(params);
-        this.set_title("AboutMe");
+        this.set_title("PrivacyPolicy");
     }
 
     async get_html() 
@@ -14,7 +14,7 @@ export default class extends AbstractView
             <div class="ctn_container">
                 <div class="ctn_container__item">
                     <div class="ctn_box">
-                        <h1 class="line_accent">&ltAbout me/&gt</h1>
+                        <h1 class="line_accent">&ltPrivacy Policy/&gt</h1>
                     </div>
                 </div>
             </div>

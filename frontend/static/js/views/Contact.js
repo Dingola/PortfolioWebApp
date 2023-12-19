@@ -1,8 +1,8 @@
 import AbstractView from "./AbstractView.js";
 
-export default class extends AbstractView
+export default class extends AbstractView 
 {
-    constructor(params)
+    constructor(params) 
     {
         super(params);
         this.set_title("Contact");
@@ -10,13 +10,45 @@ export default class extends AbstractView
 
     async get_html() 
     {
-        return await super.generate_html(`
-            <div class="">
-                <div>
-                    <h1>Single Page App</h1>
-                    <p>Contact</p>
+        const html = `
+            <div class="ctn_container">
+                <div class="ctn_container__item">
+                    <div class="ctn_box">
+                        <h1 class="line_accent">&ltContact/&gt</h1>
+                        <div class="ctn_box__wrapper">
+
+                            <p>Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
+                            <div class="ctn_box__inner_box">
+                                <div class="form_wrapper">
+                                    <form class="form">
+                                        <div class="form__group">
+                                            <label>Your Name *</label>
+                                            <div class="input_wrapper"><input class="form__control" label="Your Name" placeholder="" type="text" value=""></div>
+                                        </div>
+                                        <div class="form__group">
+                                            <label>Your E-Mail *</label>
+                                            <div class="input_wrapper"><input class="form__control" autocomplete="email" pattern="^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,20})$" label="Your E-Mail" placeholder="" type="text" value=""></div>
+                                        </div>
+                                        <div class="form__group">
+                                            <label>Your Message *</label>
+                                            <textarea class="form__control" label="Your Message" placeholder="" rows="5" spellcheck="false"></textarea>
+                                        </div>
+                                        <div class="form__footer">
+                                            <p class="form__info_text">Ihre Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert. Alle Details finden Sie in der <a href="/privacy_policy" data-link>Datenschutzerklärung</a>.</p>
+                                            <div class="form__controls">
+                                                <button class="btn" type="submit">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        `);
+        `;
+
+        return await super.generate_html(html);
     }
 }

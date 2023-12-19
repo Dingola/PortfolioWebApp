@@ -12,8 +12,8 @@ const ratings_array = [
     new Rating('Programming Languages & Co.', 'HTML', 2),
     new Rating('Programming Languages & Co.', 'CSS', 2),
     new Rating('Programming Languages & Co.', 'SQL', 2),
-    new Rating('Programming Languages & Co.', 'LabVIEW (G)', 2),
     new Rating('Programming Languages & Co.', 'C#', 1),
+    new Rating('Programming Languages & Co.', 'LabVIEW (G)', 2),
     new Rating('Frameworks and Libraries', 'Qt / QML', 3),
     new Rating('Frameworks and Libraries', 'Google Test', 2),
     new Rating('Frameworks and Libraries', 'Doxygen', 2),
@@ -32,7 +32,8 @@ const ratings_array = [
     new Rating('Development Tools and Build Systems', 'LabVIEW', 2),
     new Rating('Development Tools and Build Systems', 'Maven', 1),
     new Rating('Development Tools and Build Systems', 'Figma', 1),
-    new Rating('Development Tools and Build Systems', 'UE5', 1)
+    new Rating('Development Tools and Build Systems', 'UE5', 1),
+    new Rating('Development Tools and Build Systems', 'Blender', 1)
 ];
 
 const convert_array_to_object = (array) => {

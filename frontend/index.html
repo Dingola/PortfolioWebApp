@@ -11,7 +11,6 @@
     <title>Single Page App</title>
 </head>
 <body>
-
     <header>
         <nav class="nav">
             <ul class="nav__ul">
@@ -19,10 +18,10 @@
                     <a href="/" data-link>Home</a>
                 </li>
                 <li class="nav__item">
-                    <a href="/about" data-link>About Me</a>
+                    <a href="/about" data-link>Über mich</a>
                 </li>           
                 <li class="nav__item">
-                    <a href="/contact" data-link>Contact</a>
+                    <a href="/contact" data-link>Kontakt</a>
                 </li>
             </ul>
             <div class="burger">
@@ -32,13 +31,29 @@
             </div>
         </nav>
     </header>
-
-    <div id="app"></div>
-
+    <div class="app_wrapper">
+        <div class="app">
+            <div class="app__page_left"></div>
+            <div class="app__page_right"></div>
+        </div>
+    </div>
     <footer>
+        <div class="footer_container">
+            <div class="footer_nav_wrapper">
+                <nav class="footer_nav">
+                    <ul class="footer_nav__ul">
+                        <h1>Rechtliches</h1>
+                        <li class="footer_nav__item">
+                            <a href="/impressum" data-link>Impressum</a>
+                        </li>
+                        <li class="footer_nav__item">
+                            <a href="/privacy_policy" data-link>Datenschutzerklärung</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </footer>
-
     <script type="module" src="/static/js/index.js"></script>
-    <script type="module" src="/static/js/nav.js"></script>    
 </body>
 </html>

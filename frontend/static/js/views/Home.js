@@ -19,11 +19,25 @@ export default class extends AbstractView
                             <h1>Welcome, I'm a C++ Software Developer</h1>
                             <p>asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas
                             </p>
-                            <a href="/about" class="neutral_link" data-link>More</a>
+                            <a href="/about" class="link" data-link>Über mich</a>
                         </div>
-                        <div class="profilimage">
-                            <div class="flex_center">
-                            <img src="static/css/resources/images/Profilimage.jpg" alt="Profilimage" class="border_circle"> 
+                        <div class="profil__right_side_ctn">
+                            <div class="profilimage">
+                                <div class="flex_center">
+                                    <img src="static/css/resources/images/Profilimage.jpg" loading="lazy" alt="Profilimage" class="border_circle"> 
+                                </div>
+                            </div>
+                            <div class="external_links_wrapper">
+                                <div class="external_links">
+                                    <a target="_blank" href="https://github.com/Dingola">
+                                        <img src="static/css/resources/images/logos/github/github-mark/github-mark-white.png" alt="GitHub">
+                                        <p>GitHub</p>
+                                    </a>
+                                    <a target="_blank" href="https://linkedin.com/in/adrian-helbig-b7b023251">
+                                        <img src="static/css/resources/images/logos/LinkedIn-Logos/LI-In-Bug.png" alt="LinkedIn">
+                                        <p>LinkedIn</p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -31,9 +45,11 @@ export default class extends AbstractView
                 <div class="ctn_container__item">
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltMy Skills/&gt</h1>
-                        <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
-                        <div class="ctn_box__inner_box">
-                            ${await this.generate_rating_html()}
+                        <div class="ctn_box__wrapper">
+                            <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
+                            <div class="ctn_box__inner_box">
+                                ${await this.generate_rating_html()}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +88,8 @@ export default class extends AbstractView
         }
     }
 
-    async generate_rating_html() {
+    async generate_rating_html() 
+    {
         let result = '';
         let ratings_object = await this.fetch_ratings();
 
@@ -107,7 +124,8 @@ export default class extends AbstractView
         return result;
     }
 
-    generate_category_HTML(category, ratings) {
+    generate_category_HTML(category, ratings) 
+    {
         return `
             <div class="rating__category">
                 <h3 class="underline_accent">${category}</h3>
@@ -117,7 +135,8 @@ export default class extends AbstractView
             </div>`;
     }
 
-    generate_rating_HTML(rating) {
+    generate_rating_HTML(rating) 
+    {
         return `
             <div class="rating__box">
                 <p>${rating.subject}</p>
@@ -128,11 +147,13 @@ export default class extends AbstractView
             </div>`;
     }
 
-    generate_filled_stars(value) {
+    generate_filled_stars(value) 
+    {
         return Array.from({ length: value }, () => '<div class="rating__value_box_item rating__value_box_item_filled"></div>').join('');
     }
 
-    generate_empty_stars(value) {
+    generate_empty_stars(value) 
+    {
         const empty_stars_count = Math.max(0, value - 3);
         return Array.from({ length: empty_stars_count }, () => '<div class="rating__value_box_item"></div>').join('');
     }

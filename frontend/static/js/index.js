@@ -2,73 +2,207 @@
 import Home from "./views/Home.js";
 import Contact from "./views/Contact.js";
 import AboutMe from "./views/AboutMe.js";
+import Impressum from "./views/Impressum.js";
+import PrivacyPolicy from "./views/PrivacyPolicy.js";
 
-import { set_active_nav_link } from "./nav.js";
+// Import components
+import NavigationHandler from "./components/NavigationHandler.js";
+import FormGroupsHandler from "./components/FormGroupsHandler.js"
 
-// Define routes for the application, mapping paths to their associated views.
-const routes = [
-    { path: "/", view: Home },
-    { path: "/contact", view: Contact },
-    { path: "/about", view: AboutMe }
-];
+class App 
+{
+    constructor() 
+    {
+        // Import various views used in the application.
+        this.views = {
+            Home,
+            AboutMe,
+            Contact,
+            Impressum,
+            PrivacyPolicy
+        };
 
-// Helper function to convert a path into a regular expression for route matching.
-const path_to_regex = path => new RegExp(`^${path.replace(/\//g, '\\/').replace(/:\w+/g, '(.+)')}$`);
+        // Import components
+        this.navigation_handler = new NavigationHandler();
+        this.form_groups_handler = null;
 
-// Function to navigate to a different URL and update the view.
-const navigate_to = url => {
-    history.pushState(null, null, url);
-    router();
-};
+        // Define routes for the application, mapping paths to their associated views.
+        this.routes = [
+            { path: "/", view: this.views.Home },
+            { path: "/about", view: this.views.AboutMe },
+            { path: "/contact", view: this.views.Contact },
+            { path: "/impressum", view: this.views.Impressum },
+            { path: "/privacy_policy", view: this.views.PrivacyPolicy }
+        ];
 
-// Function to extract parameters from a match.
-const get_params = match => {
-    const values = match.result.slice(1);
-    const keys = Array.from(match.route.path.matchAll(/:(\w+)/g)).map(result => result[1]);
+        this.current_path = null;
+        this.previous_path = -1;
 
-    return keys.reduce((params, key, i) => {
-        params[key] = values[i];
-        return params;
-    }, {});
-};
+        document.addEventListener('burger_toggled', (event) => {
+            this.set_content_blur_enabled(event.detail.is_open);
+        });
 
-// Main routing function that monitors the current URL and displays the corresponding view.
-const router = async () => {
-    // Generate a list of potential matches for the current routes.
-    const potential_matches = routes.map(route => ({
-        route,
-        result: location.pathname.match(path_to_regex(route.path))
-    }));
+        // Helper function to convert a path into a regular expression for route matching.
+        this.path_to_regex = path => new RegExp(`^${path.replace(/\//g, '\\/').replace(/:\w+/g, '(.+)')}$`);
 
-    const matchIndex = potential_matches.findIndex(potential_match => potential_match.result !== null);
-    const match = matchIndex !== -1 ? potential_matches[matchIndex] : { route: routes[0], result: [location.pathname] };
+        // Add an event listener to handle changes in the browser's history (e.g., back/forward buttons).
+        window.addEventListener("popstate", this.router.bind(this));
 
-    const view = new match.route.view(get_params(match));
-    document.querySelector("#app").innerHTML = await view.get_html();
-    window.scrollTo(0, 0);
-    set_active_nav_link();
+        document.body.addEventListener("click", this.handle_data_link_click.bind(this));
+        window.addEventListener('resize', this.handle_resize.bind(this));
 
-    // VanillaTilt.init(document.querySelector(".border_circle"), {
-    //     max: 25,
-    //     speed: 600
-    // });
-};
+        this.router();
+    }
 
-// Add an event listener to handle changes in the browser's history (e.g., back/forward buttons).
-window.addEventListener("popstate", router);
+    handle_resize()
+    {
+        this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open() && this.navigation_handler.is_burger_visible());
+    }
 
-// Add an event listener to execute the routing function when the DOM content is fully loaded.
-document.addEventListener("DOMContentLoaded", () => {
-    // Add a click event listener to handle links with the "data-link" attribute.
-    document.body.addEventListener("click", e => {
-        if (e.target.matches("[data-link]")) 
+    compare_paths(previous_path, current_path) 
+    {
+        var result = -1;
+        const previous_index = this.routes.findIndex(route => route.path === previous_path);
+        const current_index = this.routes.findIndex(route => route.path === current_path);
+
+        if (previous_index < current_index) 
         {
-            e.preventDefault();
-            navigate_to(e.target.href);
+            result = 0;
+        } 
+        else if (previous_index > current_index) 
+        {
+            result = 1;
+        } 
+        else if (previous_index == current_index && !(previous_index === -1 || current_index === -1))
+        {
+            result = 2;
         }
-    });
 
-    // Initialize the routing function when the DOM is ready.
-    router();
+        return result;
+    }
+
+    async router() 
+    {
+        // Generate a list of potential matches for the current routes.
+        const potential_matches = this.routes.map(route => ({
+            route,
+            result: location.pathname.match(this.path_to_regex(route.path))
+        }));
+
+        const match_index = potential_matches.findIndex(potential_match => potential_match.result !== null);
+        const match = match_index !== -1 ? potential_matches[match_index] : { route: this.routes[0], result: [location.pathname] };
+   
+        const view = new match.route.view(this.get_params(match));
+        const view_html = await view.get_html();
+        this.current_path = match.route.path;
+        await this.switch_page_and_update(view_html);
+        this.previous_path = match.route.path;
+    }
+
+    async switch_page_and_update(page_html_content)
+    {
+        const app = document.querySelector(".app");       
+        const page_left = document.querySelector(".app__page_left");
+        const page_right = document.querySelector(".app__page_right");
+        var direction = this.compare_paths(this.previous_path, this.current_path);
+        
+        if (this.previous_path == -1)
+        {
+            page_left.innerHTML = page_html_content;
+        }
+        else 
+        {
+            if (direction == 0)
+            {   
+                page_right.innerHTML = page_html_content;
+                app.classList.add("app__page_transition");
+                app.style.transform = "translateX(-50%)";
+            }
+            else if (direction == 1)
+            {
+                app.style = "left: -100%;";
+                page_right.innerHTML = page_left.innerHTML;
+                page_left.innerHTML = page_html_content;
+                app.classList.add("app__page_transition");
+                app.style.transform = "translateX(50%)";
+            }
+        }
+    
+        window.scrollTo(0, 0);
+
+        this.navigation_handler.update_active_link();
+        this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open());
+
+        app.addEventListener('click', (event) => {
+            if (app.contains(event.target) && this.navigation_handler.is_burger_visible() && this.navigation_handler.is_burger_menu_open()) 
+            {
+                this.navigation_handler.toggle_burger_menu();
+            }
+        });
+
+        setTimeout(() => {
+            app.classList.remove("app__page_transition");
+            app.style = "left: 0%;";
+            app.style.transform = "translateX(0%)";
+            page_left.innerHTML = page_html_content;
+
+            if (this.previous_path != -1 && direction != -1)
+            {
+                if (direction == 0)
+                {
+                    page_left.innerHTML = page_html_content;
+                    page_right.innerHTML = "";
+                }
+                else if (direction == 1)
+                {
+                    page_left.innerHTML = page_html_content;
+                    page_right.innerHTML = "";
+                }
+            }
+
+            if (!this.form_groups_handler)
+            {
+                this.form_groups_handler = new FormGroupsHandler();
+            }
+        }, 450); // Die Zeit sollte der Transition-Zeit in der CSS-Datei entsprechen
+    }
+
+    get_params(match) 
+    {
+        const values = match.result.slice(1);
+        const keys = Array.from(match.route.path.matchAll(/:(\w+)/g)).map(result => result[1]);
+
+        return keys.reduce((params, key, i) => 
+        {
+            params[key] = values[i];
+            return params;
+        }, {});
+    }
+
+    handle_data_link_click(event) 
+    {
+        if (event.target.matches("[data-link]")) 
+        {
+            event.preventDefault();
+            this.navigate_to(event.target.href);
+        }
+    }
+
+    navigate_to(url)
+    {
+        history.pushState(null, null, url);
+        this.router();
+    }
+
+    set_content_blur_enabled(enabled)
+    {
+        const content = document.querySelector('.content');
+        content.classList.toggle('blur', enabled);
+    }
+}
+
+// Instantiate the App class when the DOM is ready.
+document.addEventListener("DOMContentLoaded", () => 
+{
+    const app = new App();
 });
-
