@@ -1,7 +1,7 @@
 // Import various views used in the application.
 import Home from "./views/Home.js";
 import Contact from "./views/Contact.js";
-import AboutMe from "./views/AboutMe.js";
+import MyCareer from "./views/MyCareer.js";
 import Impressum from "./views/Impressum.js";
 import PrivacyPolicy from "./views/PrivacyPolicy.js";
 
@@ -16,7 +16,7 @@ class App
         // Import various views used in the application.
         this.views = {
             Home,
-            AboutMe,
+            MyCareer,
             Contact,
             Impressum,
             PrivacyPolicy
@@ -29,7 +29,7 @@ class App
         // Define routes for the application, mapping paths to their associated views.
         this.routes = [
             { path: "/", view: this.views.Home },
-            { path: "/about", view: this.views.AboutMe },
+            { path: "/career", view: this.views.MyCareer },
             { path: "/contact", view: this.views.Contact },
             { path: "/impressum", view: this.views.Impressum },
             { path: "/privacy_policy", view: this.views.PrivacyPolicy }
@@ -37,6 +37,7 @@ class App
 
         this.current_path = null;
         this.previous_path = -1;
+        this.data_link_clicked = false;
 
         document.addEventListener('burger_toggled', (event) => {
             this.set_content_blur_enabled(event.detail.is_open);
@@ -48,8 +49,19 @@ class App
         // Add an event listener to handle changes in the browser's history (e.g., back/forward buttons).
         window.addEventListener("popstate", this.router.bind(this));
 
-        document.body.addEventListener("click", this.handle_data_link_click.bind(this));
+        document.body.addEventListener("click", this.handle_click_event.bind(this));
         window.addEventListener('resize', this.handle_resize.bind(this));
+
+        let local_storage = localStorage.getItem('theme'),
+        theme_to_set = local_storage;
+
+        if (!local_storage)
+        {
+            theme_to_set = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', theme_to_set);
+        this.navigation_handler.adjust_main_nav_background();  /* header_container_bg_color opacity set to 0 */
 
         this.router();
     }
@@ -105,6 +117,12 @@ class App
         const page_left = document.querySelector(".app__page_left");
         const page_right = document.querySelector(".app__page_right");
         var direction = this.compare_paths(this.previous_path, this.current_path);
+        var current_scroll_y_pos = window.scrollY;
+
+
+        var transition_spacer = null;
+        var offset = window.scrollY;
+        console.debug("scrollY", offset);
         
         if (this.previous_path == -1)
         {
@@ -112,23 +130,39 @@ class App
         }
         else 
         {
-            if (direction == 0)
+            if (direction == 0) // left to right
             {   
                 page_right.innerHTML = page_html_content;
+
+                if (this.data_link_clicked)
+                {
+                    transition_spacer = page_right.querySelector('.transition_spacer');
+                    transition_spacer.style.height = offset + 'px';
+                    transition_spacer.style.display = "block";
+                }
+
                 app.classList.add("app__page_transition");
                 app.style.transform = "translateX(-50%)";
             }
-            else if (direction == 1)
-            {
+            else if (direction == 1) // right to left
+            {                
                 app.style = "left: -100%;";
                 page_right.innerHTML = page_left.innerHTML;
                 page_left.innerHTML = page_html_content;
+
+                if (this.data_link_clicked)
+                {
+                    transition_spacer = page_left.querySelector('.transition_spacer');
+                    transition_spacer.style.height = offset + 'px';
+                    transition_spacer.style.display = "block";
+                }
+
                 app.classList.add("app__page_transition");
                 app.style.transform = "translateX(50%)";
             }
         }
     
-        window.scrollTo(0, 0);
+        //window.scrollTo(0, 0);
 
         this.navigation_handler.update_active_link();
         this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open());
@@ -146,6 +180,13 @@ class App
             app.style.transform = "translateX(0%)";
             page_left.innerHTML = page_html_content;
 
+            if (transition_spacer != null)
+            {
+                transition_spacer.style.height = '0px';
+                transition_spacer.style.display = "none";
+                window.scrollTo(0, 0);
+            }
+
             if (this.previous_path != -1 && direction != -1)
             {
                 if (direction == 0)
@@ -159,6 +200,8 @@ class App
                     page_right.innerHTML = "";
                 }
             }
+
+            this.data_link_clicked = false;
 
             if (!this.form_groups_handler)
             {
@@ -179,10 +222,15 @@ class App
         }, {});
     }
 
-    handle_data_link_click(event) 
+    handle_click_event(event) 
     {
-        if (event.target.matches("[data-link]")) 
+        if (event.target.matches("[theme-switch"))
         {
+            this.switch_theme();
+        }
+        else if (event.target.matches("[data-link]")) 
+        {
+            this.data_link_clicked = true;
             event.preventDefault();
             this.navigate_to(event.target.href);
         }
@@ -198,6 +246,18 @@ class App
     {
         const content = document.querySelector('.content');
         content.classList.toggle('blur', enabled);
+    }
+
+    switch_theme() {
+        const root_elem = document.documentElement;
+        let data_theme = root_elem.getAttribute('data-theme'),
+            new_theme;
+
+        new_theme = (data_theme === 'light') ? 'dark' : 'light';
+
+        root_elem.setAttribute('data-theme', new_theme);
+        localStorage.setItem('theme', new_theme);
+        this.navigation_handler.adjust_main_nav_background();
     }
 }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,26 +10,38 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <title>Single Page App</title>
 </head>
+
 <body>
     <header>
-        <nav class="nav">
-            <ul class="nav__ul">
-                <li class="nav__item">
-                    <a href="/" data-link>Home</a>
-                </li>
-                <li class="nav__item">
-                    <a href="/about" data-link>Über mich</a>
-                </li>           
-                <li class="nav__item">
-                    <a href="/contact" data-link>Kontakt</a>
-                </li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+        <div class="header_container">
+            <div class="logo">
+                <h1><a href="/" data-link>AH</a> Portfolio</h1>
             </div>
-        </nav>
+            <nav class="nav">
+                <ul class="nav__ul">
+                    <li class="nav__item">
+                        <a href="/" data-link>Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/career" data-link>Laufbahn</a>
+                    </li>           
+                    <li class="nav__item">
+                        <a href="/contact" data-link>Kontakt</a>
+                    </li>
+                </ul>
+                <div class="switch">
+                    <label>
+                        <input type="checkbox" theme-switch>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
     </header>
     <div class="app_wrapper">
         <div class="app">
@@ -37,6 +49,7 @@
             <div class="app__page_right"></div>
         </div>
     </div>
+    <button class="scroll_to_top_btn" type="submit"></button>
     <footer>
         <div class="footer_container">
             <div class="footer_nav_wrapper">

@@ -1,4 +1,5 @@
-export default class FormGroupsHandler {
+export default class FormGroupsHandler 
+{
     constructor() 
     {
         this.setup_event_listeners();

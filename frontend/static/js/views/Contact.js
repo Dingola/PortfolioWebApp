@@ -17,7 +17,6 @@ export default class extends AbstractView
                         <h1 class="line_accent">&ltContact/&gt</h1>
                         <div class="ctn_box__wrapper">
 
-                            <p>Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
                             <div class="ctn_box__inner_box">
                                 <div class="form_wrapper">
                                     <form class="form">

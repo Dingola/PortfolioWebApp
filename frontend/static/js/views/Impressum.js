@@ -15,7 +15,24 @@ export default class extends AbstractView
                 <div class="ctn_container__item">
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltImpressum/&gt</h1>
-                        <div class="ctn_box__wrapper">
+                        <div class="ctn_box__inner_box impressum">
+                            <div class="text">
+                                <h3>Angaben gemäß § 5 TMG</h3>
+                                <br>
+                                <h2>Herausgeber und Autor:</h2>
+                                <p>
+                                Adrian Helbig<br>
+                                Buschrosensteig 9<br>
+                                12347 Berlin
+                                <p>
+                                <br>
+                                <h2>Kontakt:</h2>
+                                <p>E-Mail: Adrian-Helbig@outlook.com</p>
+                                <a href="/contact" class="link" data-link>Kontaktformular</a>
+                                <br><br>
+                                <h2>Datenschutz:</h2>
+                                <p>Die Datenschutzerklärung finden Sie <a href="/privacy_policy" data-link>hier</a>.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ export default class
 
     async generate_html(content) 
     {
-        return `<div class="content">` + content + `</div>`;
+        return `<div class="content"><div class="transition_spacer"></div>` + content + `</div>`;
     }
     
     
