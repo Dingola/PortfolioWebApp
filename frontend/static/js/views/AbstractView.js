@@ -1,8 +1,22 @@
+'use strict';
+
+import GalleryHandler from "./../components/GalleryHandler.js";
+
 export default class 
 {
+    gallery_handler = null;
+
     constructor(params)
     {
         this.params = params;
+    }
+
+    set_handler(handler)
+    {
+        if (handler instanceof GalleryHandler)
+        {
+            this.gallery_handler = handler;
+        }
     }
 
     set_title(title)

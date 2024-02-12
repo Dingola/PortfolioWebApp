@@ -8,6 +8,7 @@ import PrivacyPolicy from "./views/PrivacyPolicy.js";
 // Import components
 import NavigationHandler from "./components/NavigationHandler.js";
 import FormGroupsHandler from "./components/FormGroupsHandler.js"
+import GalleryHandler from "./components/GalleryHandler.js";
 
 class App 
 {
@@ -25,6 +26,7 @@ class App
         // Import components
         this.navigation_handler = new NavigationHandler();
         this.form_groups_handler = null;
+        this.gallery_handler = new GalleryHandler();
 
         // Define routes for the application, mapping paths to their associated views.
         this.routes = [
@@ -105,6 +107,8 @@ class App
         const match = match_index !== -1 ? potential_matches[match_index] : { route: this.routes[0], result: [location.pathname] };
    
         const view = new match.route.view(this.get_params(match));
+        this.gallery_handler.clear_galleries();
+        view.set_handler(this.gallery_handler);
         const view_html = await view.get_html();
         this.current_path = match.route.path;
         await this.switch_page_and_update(view_html);
@@ -161,8 +165,6 @@ class App
                 app.style.transform = "translateX(50%)";
             }
         }
-    
-        //window.scrollTo(0, 0);
 
         this.navigation_handler.update_active_link();
         this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open());
@@ -202,6 +204,7 @@ class App
             }
 
             this.data_link_clicked = false;
+            this.gallery_handler.setup_galleries();
 
             if (!this.form_groups_handler)
             {

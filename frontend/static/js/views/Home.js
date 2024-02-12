@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 
+import GalleryHandler from "../components/GalleryHandler.js";
 
 export default class extends AbstractView
 {
@@ -25,12 +26,12 @@ export default class extends AbstractView
                                 nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
                                 <a href="/career" class="link" data-link>Laufbahn</a>
                             </p>
+                          
                         </div>
                         <div class="profil__right_side_ctn">
-                            <div class="profilimage">
-                                <div class="flex_center">
-                                    <img src="static/css/resources/images/Profilimage.jpg" loading="lazy" alt="Profilimage" class="border_circle"> 
-                                </div>
+                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage">
+                                <img src="" loading="lazy" alt="Profilimage" class="border_circle">
+                                <div class="overlay_container" style="width:120%;"></div>
                             </div>
                             <div class="external_links_wrapper">
                                 <div class="external_links">
@@ -222,8 +223,8 @@ export default class extends AbstractView
                 result += `	
                     <div class="card card--width border">
                         <div class="card__container_left">
-                            <div class="card__img_wrapper">
-                                <img src="${project.images[0]}" loading="lazy" class="card__img">
+                            <div id="${this.gallery_handler.create_gallery(project.images)}" class="card__img_wrapper">
+                                <img src="" loading="lazy" class="card__img">
                             </div>
                             <div class="card__links">
                                 <a target="_blank" href="${project.github_url}">Code</a>
