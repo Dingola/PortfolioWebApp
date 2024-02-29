@@ -210,6 +210,12 @@
     --card-img-wrapper-border-color: var(--brand-color-1-100);
 
     --lightbox-bg-bcolor: rgba(0, 0, 0, 0.8);
+
+    --timeline-color: var(--brand-color-1-300);
+    --timeline-bg-color: var(--neutral-color-1-100);
+    --timeline-shadow-color: var(--neutral-color-1-700);
+    --timeline-content-bg-color: var(--neutral-color-1-000);
+    --timeline-point_bg-color: var(--brand-color-1-300);
 }
 
 :root[data-theme="light"] {
@@ -371,7 +377,7 @@
     --timeline-bg-color: var(--neutral-color-1-830);
     --timeline-shadow-color: var(--neutral-color-1-700);
     --timeline-content-bg-color: var(--neutral-color-1-900);
-    --timeline-point_bg-color: var(--brand-color-1-100);
+    --timeline-point_bg-color: var(--brand-color-1-300);
 }
 
 /* >> GENERAL STYLES << */
