@@ -54,14 +54,15 @@ class App
         document.body.addEventListener("click", this.handle_click_event.bind(this));
         window.addEventListener('resize', this.handle_resize.bind(this));
 
-        let local_storage = localStorage.getItem('theme'),
-        theme_to_set = local_storage;
+        // let local_storage = localStorage.getItem('theme'),
+        // theme_to_set = local_storage;
 
-        if (!local_storage)
-        {
-            theme_to_set = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
+        // if (!local_storage)
+        // {
+        //     theme_to_set = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        // }
 
+        let theme_to_set = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme_to_set);
         this.navigation_handler.adjust_main_nav_background();  /* header_container_bg_color opacity set to 0 */
 
@@ -259,7 +260,7 @@ class App
         new_theme = (data_theme === 'light') ? 'dark' : 'light';
 
         root_elem.setAttribute('data-theme', new_theme);
-        localStorage.setItem('theme', new_theme);
+        //localStorage.setItem('theme', new_theme);
         this.navigation_handler.adjust_main_nav_background();
     }
 }

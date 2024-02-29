@@ -229,10 +229,6 @@ export default class extends AbstractView
                             <div id="${this.gallery_handler.create_gallery(project.images)}" class="card__img_wrapper">
                                 <img src="" loading="lazy" class="card__img">
                             </div>
-                            <div class="card__links">
-                                <a class="link extern_icon" target="_blank" href="${project.github_url}">Code</a>
-                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Demo</a>
-                            </div>
                         </div>
                         <div class="card__container_right">
                             <div class="card__description">
@@ -240,6 +236,10 @@ export default class extends AbstractView
                                     <h2>${project.title}</h2>
                                     <p>${project.description}</p>
                                 </div>
+                            </div>
+                            <div class="card__links">
+                                <a class="link extern_icon" target="_blank" href="${project.github_url}">Code</a>
+                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Demo</a>
                             </div>
                             <div class="card__skills">
                                 <h3>Tech Stack:</h2>
