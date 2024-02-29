@@ -16,7 +16,7 @@ export default class extends AbstractView
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltContact/&gt</h1>
                         <div class="ctn_box__wrapper">
-
+                            
                             <div class="ctn_box__inner_box">
                                 <div class="form_wrapper">
                                     <form class="form">

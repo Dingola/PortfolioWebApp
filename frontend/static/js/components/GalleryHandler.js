@@ -24,30 +24,33 @@ export default class GalleryHandler
         let gallery_element = null;
         let img_element = null;
         
-        this.#galleries.forEach((value, key) => {
-            gallery_element = document.getElementById(key);
-            
-            if (gallery_element != null)
-            {
-                img_element = gallery_element.querySelector('img');
-
-                if (img_element == null)
-                {
-                    img_element = document.createElement('img');
-                    gallery_element.appendChild(img_element);
-                }
-
-                img_element.classList.add('current_img');
-                this.#create_overlay(key, gallery_element, img_element);
+        if (this.#galleries != null)
+        {
+            this.#galleries.forEach((value, key) => {
+                gallery_element = document.getElementById(key);
                 
-                img_element.src = value.images[value.current_image_index];
-                img_element.addEventListener('click', (event) => {
-                    this.#current_gallery_id = key;
-                    this.#img_element = img_element;
-                    this.show_lightbox();
-                });
-            }
-        });
+                if (gallery_element != null)
+                {
+                    img_element = gallery_element.querySelector('img');
+
+                    if (img_element == null)
+                    {
+                        img_element = document.createElement('img');
+                        gallery_element.appendChild(img_element);
+                    }
+
+                    img_element.classList.add('current_img');
+                    this.#create_overlay(key, gallery_element, img_element);
+                    
+                    img_element.src = value.images[value.current_image_index];
+                    img_element.addEventListener('click', (event) => {
+                        this.#current_gallery_id = key;
+                        this.#img_element = img_element;
+                        this.show_lightbox();
+                    });
+                }
+            });
+        }
     }
 
     create_gallery(images)
@@ -257,8 +260,8 @@ export default class GalleryHandler
         let result = `
             <div class="lightbox">
                 <button class="lightbox__btn close_btn">X</button>
-                <button class="lightbox__btn prev_btn">&lt;</button>
-                <button class="lightbox__btn next_btn">&gt;</button>
+                <button class="lightbox__btn prev_btn"><img class="icon" src="static/css/resources/images/icons/ArrowLeft.svg" alt="ArrowLeft Icon"/></button>
+                <button class="lightbox__btn next_btn"><img class="icon" src="static/css/resources/images/icons/ArrowRight.svg" alt="ArrowRight Icon"/></button>
                 <img class="lightbox_img" alt="Lightbox Image">
             </div>
         `;
@@ -284,8 +287,13 @@ export default class GalleryHandler
             }
 
             let overlay_btn = document.createElement('button');
-            overlay_btn.appendChild(document.createTextNode('<'));
             overlay_btn.classList.add('overlay_container__btn');
+
+            let image_left_icon = document.createElement('img');
+            image_left_icon.classList.add('icon');
+            image_left_icon.src = 'static/css/resources/images/icons/ArrowLeft.svg';
+            overlay_btn.appendChild(image_left_icon);
+
             overlay_container.appendChild(overlay_btn);
             overlay_btn.addEventListener('click', (event) => {
                 this.#current_gallery_id = key;
@@ -294,8 +302,13 @@ export default class GalleryHandler
             });
 
             overlay_btn = document.createElement('button');
-            overlay_btn.appendChild(document.createTextNode('>'));
             overlay_btn.classList.add('overlay_container__btn');
+
+            let image_right_icon = document.createElement('img');
+            image_right_icon.classList.add('icon');
+            image_right_icon.src = 'static/css/resources/images/icons/ArrowRight.svg';
+            overlay_btn.appendChild(image_right_icon);
+
             overlay_container.appendChild(overlay_btn);
             overlay_btn.addEventListener('click', (event) => {
                 this.#current_gallery_id = key;

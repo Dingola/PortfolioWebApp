@@ -1,7 +1,5 @@
 import AbstractView from "./AbstractView.js";
 
-import GalleryHandler from "../components/GalleryHandler.js";
-
 export default class extends AbstractView
 {
     constructor(params)
@@ -17,21 +15,22 @@ export default class extends AbstractView
                 <div class="ctn_container__item">
                     <div class="profil">
                         <div class="ctn_box">
-                            <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
-                            <p class="text">
-                                ein 34-jähriger <span class="highlight_text2">Berliner Softwareentwickler</span> mit einem Bachelor-Abschluss 
-                                in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und einer 
-                                erworbenen dreijährigen Berufserfahrung in diesem Feld. <br><br> Insbesondere spezialisiert habe ich mich
-                                auf die Entwicklung von <span class="highlight_text2">C++, Qt/QML-Desktop-Anwendungen</span>. Dies ist jedoch
-                                nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
-                                <a href="/career" class="link" data-link>Laufbahn</a>
-                            </p>
-                          
+                            <div class="text">
+                                <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
+                                <p>
+                                    ein 34-jähriger <span class="highlight_text2">Berliner Softwareentwickler</span> mit einem Bachelor-Abschluss 
+                                    in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und einer 
+                                    erworbenen dreijährigen Berufserfahrung in diesem Feld. <br><br> Insbesondere spezialisiert habe ich mich
+                                    auf die Entwicklung von <span class="highlight_text2">C++, Qt/QML-Desktop-Anwendungen</span>. Dies ist jedoch
+                                    nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
+                                    <a href="/career" class="link" data-link>Laufbahn</a><a href="/contact" class="contact_link" data-link>Kontakt</a>
+                                </p>
+                            </div>
                         </div>
                         <div class="profil__right_side_ctn">
                             <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage">
-                                <img src="" loading="lazy" alt="Profilimage" class="border_circle">
-                                <div class="overlay_container" style="width:120%;"></div>
+                                <img src="" loading="lazy" alt="Profil Image" class="border_circle">
+                                <div class="overlay_container" style="width:122%;"></div>
                             </div>
                             <div class="external_links_wrapper">
                                 <div class="external_links">
@@ -52,7 +51,7 @@ export default class extends AbstractView
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltMy Skills/&gt</h1>
                         <div class="ctn_box__wrapper">
-                            <p class="text">Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
+                            <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
                             <div class="ctn_box__inner_box">
                                 ${await this.generate_skill_html()}
                             </div>
@@ -62,18 +61,22 @@ export default class extends AbstractView
                 <div class="ctn_container__item">
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltProjects/&gt</h1>
-                        ${await this.generate_projects_html()}
+                        <div class="ctn_box__wrapper">
+                            ${await this.generate_projects_html()}
+                        </div>
                     </div>
                 </div>
                 <div class="ctn_container__item">
                     <div class="ctn_box">
                         <h1 class="line_accent">&ltGet In Touch/&gt</h1>
-                        <div class="ctn_box__inner_box">
-                            <div class="section_contact">
-                                <p class="text">Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
-                                <a href="/contact" class="contact_link" data-link>Contact</a>
-                                <p class="text">oder erfahren Sie mehr über mich</p>
-                                <a href="/career" class="link" data-link>Laufbahn</a>
+                        <div class="ctn_box__wrapper">
+                            <div class="ctn_box__inner_box">
+                                <div class="section_contact">
+                                    <p class="text">Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
+                                    <a href="/contact" class="contact_link" data-link>Kontakt</a>
+                                    <p class="text">oder erfahren Sie mehr über mich</p>
+                                    <a href="/career" class="link" data-link>Laufbahn</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,7 +88,7 @@ export default class extends AbstractView
     async fetch_skills() 
     {
         try {
-            const response = await fetch('/api/get_skills');
+            const response = await fetch('/api/home/get_skills');
 
             if (!response.ok) 
             {
@@ -103,7 +106,7 @@ export default class extends AbstractView
     async fetch_projects() 
     {
         try {
-            const response = await fetch('/api/get_projects');
+            const response = await fetch('/api/home/get_projects');
 
             if (!response.ok) 
             {
@@ -221,20 +224,22 @@ export default class extends AbstractView
 
             project_array.forEach((project) => {
                 result += `	
-                    <div class="card card--width border">
+                    <div class="card card--width min_height_1 border_radius">
                         <div class="card__container_left">
                             <div id="${this.gallery_handler.create_gallery(project.images)}" class="card__img_wrapper">
                                 <img src="" loading="lazy" class="card__img">
                             </div>
                             <div class="card__links">
-                                <a target="_blank" href="${project.github_url}">Code</a>
-                                <a target="_blank" href="${project.livedemo_url}">Demo</a>
+                                <a class="link extern_icon" target="_blank" href="${project.github_url}">Code</a>
+                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Demo</a>
                             </div>
                         </div>
                         <div class="card__container_right">
                             <div class="card__description">
-                                <h2>${project.title}</h2>
-                                <p>${project.description}</p>
+                                <div class="text">
+                                    <h2>${project.title}</h2>
+                                    <p>${project.description}</p>
+                                </div>
                             </div>
                             <div class="card__skills">
                                 <h3>Tech Stack:</h2>

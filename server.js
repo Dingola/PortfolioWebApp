@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const HomeRouter = require('./routes/HomeRouter');
+const CareerRouter = require('./routes/CareerRouter');
 
 const app = express();
 
@@ -14,7 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.static(__dirname + '/node_modules'));
-app.use('/api', HomeRouter.routes);
+app.use('/api/home', HomeRouter.routes);
+app.use('/api/career', CareerRouter.routes);
 app.use("/static", express.static(path.resolve(__dirname, "frontend", "static")));
 
 

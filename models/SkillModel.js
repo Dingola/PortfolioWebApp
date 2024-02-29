@@ -13,7 +13,7 @@ class SkillModel
             new Skill('Programming Languages & Co.', 'C', 2),
             new Skill('Programming Languages & Co.', 'Erlang', 1),
             new Skill('Programming Languages & Co.', 'Prolog', 1),
-            new Skill('Programming Languages & Co.', 'JavaScript', 1),
+            new Skill('Programming Languages & Co.', 'JavaScript', 2),
             new Skill('Programming Languages & Co.', 'HTML', 2),
             new Skill('Programming Languages & Co.', 'CSS', 2),
             new Skill('Programming Languages & Co.', 'SQL', 2),
