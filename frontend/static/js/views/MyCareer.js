@@ -93,7 +93,7 @@ export default class extends AbstractView
     {
         let date_begin = new Date(begin);
         let date_end = new Date(end);
-        return `<h3>${date_begin.getMonth()}/${date_begin.getFullYear()} - ${date_end.getMonth()}/${date_end.getFullYear()}</h3>`;
+        return `<h3>${(date_begin.getMonth() + 1)}/${date_begin.getFullYear()} - ${(date_end.getMonth() + 1)}/${date_end.getFullYear()}</h3>`;
     }
 
     generate_qualification_html(qualification)

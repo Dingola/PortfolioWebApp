@@ -16,8 +16,8 @@ class CareerModel
                 ``, 
                 `https://www.gfai.de/`,
                 '',
-                new Date(2017, 9),
-                new Date(2020, 10)
+                new Date(2017, 8),
+                new Date(2020, 9)
             ),
             new CareerStation(
                 `GHC - Global Health Care GmbH`, 
@@ -25,8 +25,8 @@ class CareerModel
                 ``,
                 `https://ghc-tech.de/`,
                 '',
-                new Date(2016, 9),
-                new Date(2016, 11)
+                new Date(2016, 8),
+                new Date(2016, 10)
             ),
             new CareerStation(
                 `Hochschule für Technik und Wirtschaft <br> (HTW Berlin)`, 
@@ -34,8 +34,8 @@ class CareerModel
                 ``, 
                 `https://www.htw-berlin.de/`, 
                 `Bachelor of Science (B. Sc.)`,
-                new Date(2010, 10),
-                new Date(2016, 4)
+                new Date(2010, 9),
+                new Date(2016, 3)
             ),
             new CareerStation(
                 `VIVANTES Auguste-Vikoria-Klinikum`, 
@@ -43,8 +43,8 @@ class CareerModel
                 `Meinen Zivildienst habe ich auf der Station für Neurologie absolviert. `, 
                 `https://www.vivantes.de/auguste-viktoria-klinikum/neurologie-mit-stroke-unit`,
                 ``,
-                new Date(2009, 12),
-                new Date(2010, 9)
+                new Date(2009, 11),
+                new Date(2010, 8)
             ),
             new CareerStation(
                 `Oberstufenzentrum Kommunikations-, Informations- und Medientechnik <br> (OSZ KIM Berlin)`, 
@@ -52,8 +52,8 @@ class CareerModel
                 ``, 
                 `https://www.oszkim.de/wp/`, 
                 `Allgemeine Fachhochschulreife (FOS)`,
-                new Date(2007, 8), 
-                new Date(2009, 6)
+                new Date(2007, 7), 
+                new Date(2009, 5)
             ),
             new CareerStation(
                 `Katholische Schule Sankt Marien`, 
@@ -61,8 +61,8 @@ class CareerModel
                 ``, 
                 `https://marienschule-berlin.de/`, 
                 `Mittlerer Schulabschluss (MSA)`,
-                new Date(2002, 8),
-                new Date(2007, 7)
+                new Date(2002, 7),
+                new Date(2007, 6)
             )
         ];
     }
