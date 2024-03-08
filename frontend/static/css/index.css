@@ -8,6 +8,20 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('resources/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 1 999;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('resources/fonts/Josefin_Sans/JosefinSans-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 1 999;
+    font-style: italic;
+}
+
 /* >> VARIABLES << */
 
 :root {
