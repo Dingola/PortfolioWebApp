@@ -14,7 +14,7 @@ export default class extends AbstractView
             <div class="ctn_container">
                 <div class="ctn_container__item">
                     <div class="profil">
-                        <div class="ctn_box">
+                        <div class="ctn_box animate" data-animation-type="fade_in">
                             <div class="text">
                                 <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
                                 <p>
@@ -28,11 +28,11 @@ export default class extends AbstractView
                             </div>
                         </div>
                         <div class="profil__right_side_ctn">
-                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage">
+                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage animate" data-animation-type="scroll_scale_in">
                                 <img src="" loading="lazy" alt="Profil Image" class="border_circle">
                                 <div class="overlay_container" style="width:122%;"></div>
                             </div>
-                            <div class="external_links_wrapper">
+                            <div class="external_links_wrapper animate" data-animation-type="fade_in">
                                 <div class="external_links">
                                     <a target="_blank" href="https://github.com/Dingola">
                                         <img src="static/css/resources/images/logos/github/github-mark/github-mark.png" alt="GitHub">
@@ -48,7 +48,7 @@ export default class extends AbstractView
                     </div>
                 </div>
                 <div class="ctn_container__item">
-                    <div class="ctn_box">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltMy Skills/&gt</h1>
                         <div class="ctn_box__wrapper">
                             <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
@@ -59,7 +59,7 @@ export default class extends AbstractView
                     </div>
                 </div>
                 <div class="ctn_container__item">
-                    <div class="ctn_box">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltProjects/&gt</h1>
                         <div class="ctn_box__wrapper">
                             ${await this.generate_projects_html()}
@@ -67,7 +67,7 @@ export default class extends AbstractView
                     </div>
                 </div>
                 <div class="ctn_container__item">
-                    <div class="ctn_box">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltGet In Touch/&gt</h1>
                         <div class="ctn_box__wrapper">
                             <div class="ctn_box__inner_box">
@@ -238,8 +238,8 @@ export default class extends AbstractView
                                 </div>
                             </div>
                             <div class="card__links">
-                                <a class="link extern_icon" target="_blank" href="${project.github_url}">Code</a>
-                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Demo</a>
+                                <a class="link extern_icon" target="_blank" href="${project.github_url}">GitHub</a>
+                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Live Demo</a>
                             </div>
                             <div class="card__skills">
                                 <h3>Tech Stack:</h2>

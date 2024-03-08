@@ -12,6 +12,8 @@ import GalleryHandler from "./components/GalleryHandler.js";
 
 class App 
 {
+    #current_route = null;
+
     constructor() 
     {
         // Import various views used in the application.
@@ -26,18 +28,16 @@ class App
         // Import components
         this.navigation_handler = new NavigationHandler();
         this.form_groups_handler = null;
-        this.gallery_handler = new GalleryHandler();
 
         // Define routes for the application, mapping paths to their associated views.
         this.routes = [
-            { path: "/", view: this.views.Home },
-            { path: "/career", view: this.views.MyCareer },
-            { path: "/contact", view: this.views.Contact },
-            { path: "/impressum", view: this.views.Impressum },
-            { path: "/privacy_policy", view: this.views.PrivacyPolicy }
+            { path: "/", view: this.views.Home, instance: null },
+            { path: "/career", view: this.views.MyCareer, instance: null },
+            { path: "/contact", view: this.views.Contact, instance: null },
+            { path: "/impressum", view: this.views.Impressum, instance: null },
+            { path: "/privacy_policy", view: this.views.PrivacyPolicy, instance: null }
         ];
 
-        this.current_path = null;
         this.previous_path = -1;
         this.data_link_clicked = false;
 
@@ -107,111 +107,125 @@ class App
         const match_index = potential_matches.findIndex(potential_match => potential_match.result !== null);
         const match = match_index !== -1 ? potential_matches[match_index] : { route: this.routes[0], result: [location.pathname] };
    
-        const view = new match.route.view(this.get_params(match));
-        this.gallery_handler.clear_galleries();
-        view.set_handler(this.gallery_handler);
-        const view_html = await view.get_html();
-        this.current_path = match.route.path;
+        let view = null;
+        let view_html = null;
+
+        if (this.routes[match_index].instance == null)
+        {
+            view = new match.route.view(this.get_params(match));
+            view.set_handler(new GalleryHandler());
+            view_html = await view.get_html();
+            this.routes[match_index].instance = view;
+        }
+        else
+        {
+            view = this.routes[match_index].instance;
+            view_html = await view.get_last_loaded_html();
+        }
+
+        this.#current_route = this.routes[match_index];
         await this.switch_page_and_update(view_html);
+        view.get_gallery_handler().setup_galleries();
         this.previous_path = match.route.path;
     }
 
     async switch_page_and_update(page_html_content)
     {
-        const app = document.querySelector(".app");       
-        const page_left = document.querySelector(".app__page_left");
-        const page_right = document.querySelector(".app__page_right");
-        var direction = this.compare_paths(this.previous_path, this.current_path);
-        var current_scroll_y_pos = window.scrollY;
+        return new Promise((resolve, reject) => {
+            const app = document.querySelector(".app");       
+            const page_left = document.querySelector(".app__page_left");
+            const page_right = document.querySelector(".app__page_right");
+            var direction = this.compare_paths(this.previous_path, this.#current_route.path);
 
-
-        var transition_spacer = null;
-        var offset = window.scrollY;
-        console.debug("scrollY", offset);
-        
-        if (this.previous_path == -1)
-        {
-            page_left.innerHTML = page_html_content;
-        }
-        else 
-        {
-            if (direction == 0) // left to right
-            {   
-                page_right.innerHTML = page_html_content;
-
-                if (this.data_link_clicked)
-                {
-                    transition_spacer = page_right.querySelector('.transition_spacer');
-                    transition_spacer.style.height = offset + 'px';
-                    transition_spacer.style.display = "block";
-                }
-
-                app.classList.add("app__page_transition");
-                app.style.transform = "translateX(-50%)";
+            var transition_spacer = null;
+            var offset = window.scrollY;
+            
+            if (this.previous_path == -1)
+            {
+                page_left.innerHTML = page_html_content;
             }
-            else if (direction == 1) // right to left
-            {                
-                app.style = "left: -100%;";
-                page_right.innerHTML = page_left.innerHTML;
+            else 
+            {
+                if (direction == 0) // left to right
+                {   
+                    page_right.innerHTML = page_html_content;
+
+                    if (this.data_link_clicked)
+                    {
+                        transition_spacer = page_right.querySelector('.transition_spacer');
+                        transition_spacer.style.height = offset + 'px';
+                        transition_spacer.style.display = "block";
+                    }
+
+                    app.classList.add("app__page_transition");
+                    app.style.transform = "translateX(-50%)";
+                }
+                else if (direction == 1) // right to left
+                {                
+                    app.style = "left: -100%;";
+                    page_right.innerHTML = page_left.innerHTML;
+                    page_left.innerHTML = page_html_content;
+
+                    if (this.data_link_clicked)
+                    {
+                        transition_spacer = page_left.querySelector('.transition_spacer');
+                        transition_spacer.style.height = offset + 'px';
+                        transition_spacer.style.display = "block";
+                    }
+
+                    app.classList.add("app__page_transition");
+                    app.style.transform = "translateX(50%)";
+                }
+            }
+
+            this.navigation_handler.update_active_link();
+            this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open());
+
+            app.addEventListener('click', (event) => {
+                if (app.contains(event.target) && this.navigation_handler.is_burger_visible() && this.navigation_handler.is_burger_menu_open()) 
+                {
+                    this.navigation_handler.toggle_burger_menu();
+                }
+            });
+
+            setTimeout(() => {
+                app.classList.remove("app__page_transition");
+                app.style = "left: 0%;";
+                app.style.transform = "translateX(0%)";
                 page_left.innerHTML = page_html_content;
 
-                if (this.data_link_clicked)
+                if (transition_spacer != null)
                 {
-                    transition_spacer = page_left.querySelector('.transition_spacer');
-                    transition_spacer.style.height = offset + 'px';
-                    transition_spacer.style.display = "block";
+                    transition_spacer.style.height = '0px';
+                    transition_spacer.style.display = "none";
+                    window.scrollTo(0, 0);
                 }
 
-                app.classList.add("app__page_transition");
-                app.style.transform = "translateX(50%)";
-            }
-        }
+                if (this.previous_path != -1 && direction != -1)
+                {
+                    if (direction == 0)
+                    {
+                        page_left.innerHTML = page_html_content;
+                        page_right.innerHTML = "";
+                    }
+                    else if (direction == 1)
+                    {
+                        page_left.innerHTML = page_html_content;
+                        page_right.innerHTML = "";
+                    }
+                }
 
-        this.navigation_handler.update_active_link();
-        this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open());
+                this.data_link_clicked = false;
+                this.init_scroll_animation_observer();
 
-        app.addEventListener('click', (event) => {
-            if (app.contains(event.target) && this.navigation_handler.is_burger_visible() && this.navigation_handler.is_burger_menu_open()) 
-            {
-                this.navigation_handler.toggle_burger_menu();
-            }
+                if (!this.form_groups_handler)
+                {
+                    this.form_groups_handler = new FormGroupsHandler();
+                }
+
+                resolve("");
+            }, 450); // Die Zeit sollte der Transition-Zeit in der CSS-Datei entsprechen
         });
-
-        setTimeout(() => {
-            app.classList.remove("app__page_transition");
-            app.style = "left: 0%;";
-            app.style.transform = "translateX(0%)";
-            page_left.innerHTML = page_html_content;
-
-            if (transition_spacer != null)
-            {
-                transition_spacer.style.height = '0px';
-                transition_spacer.style.display = "none";
-                window.scrollTo(0, 0);
-            }
-
-            if (this.previous_path != -1 && direction != -1)
-            {
-                if (direction == 0)
-                {
-                    page_left.innerHTML = page_html_content;
-                    page_right.innerHTML = "";
-                }
-                else if (direction == 1)
-                {
-                    page_left.innerHTML = page_html_content;
-                    page_right.innerHTML = "";
-                }
-            }
-
-            this.data_link_clicked = false;
-            this.gallery_handler.setup_galleries();
-
-            if (!this.form_groups_handler)
-            {
-                this.form_groups_handler = new FormGroupsHandler();
-            }
-        }, 450); // Die Zeit sollte der Transition-Zeit in der CSS-Datei entsprechen
     }
 
     get_params(match) 
@@ -242,6 +256,26 @@ class App
 
     navigate_to(url)
     {
+        const elements = document.querySelectorAll('.animate')
+        let animation_attribute = null;
+
+        elements.forEach((element) => {
+            animation_attribute = element.getAttribute('data-animation-type');
+            
+            if (element.classList.contains(animation_attribute))
+            {
+                element.classList.remove('animate');
+                element.classList.remove(animation_attribute);
+            }
+        })
+
+        const page_left = document.querySelector(".app__page_left");
+
+        if ((page_left != null) && (this.#current_route.instance != null))
+        {
+            this.#current_route.instance.set_last_loaded_html(page_left.innerHTML);
+        }
+
         history.pushState(null, null, url);
         this.router();
     }
@@ -252,7 +286,8 @@ class App
         content.classList.toggle('blur', enabled);
     }
 
-    switch_theme() {
+    switch_theme() 
+    {
         const root_elem = document.documentElement;
         let data_theme = root_elem.getAttribute('data-theme'),
             new_theme;
@@ -262,6 +297,71 @@ class App
         root_elem.setAttribute('data-theme', new_theme);
         //localStorage.setItem('theme', new_theme);
         this.navigation_handler.adjust_main_nav_background();
+    }
+
+    init_scroll_animation_observer() 
+    {
+        const elements = document.querySelectorAll('.animate');
+        let data_animation_type = null;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(async (entry) => {
+               if (entry.isIntersecting)
+               {
+                    data_animation_type = entry.target.getAttribute('data-animation-type');
+
+                    if (data_animation_type == 'scroll_scale_in')
+                    {
+                        if (entry.intersectionRatio >= 0.7)
+                        {
+                            if (entry.target.classList.contains('profilimage'))
+                            {
+                                await this.set_data_animation_type(entry, data_animation_type, 100);
+                            }
+                            else
+                            {
+                                await this.set_data_animation_type(entry, data_animation_type);
+                            }
+                        }
+                    }
+                    else if (data_animation_type == 'header_fade_in_from_top')
+                    {
+                        // set timouet to 1.8s if page is home ('/') and scroll >=
+                        await this.set_data_animation_type(entry, data_animation_type, (window.scrollY >= (window.innerHeight / 3) || (this.#current_route.path != '/')) ? 0 : 1400);
+                    }
+                    else if (data_animation_type == 'timeline_scale_in_from_top')
+                    {
+                        await this.set_data_animation_type(entry, data_animation_type);
+                    }
+                    else if (entry.intersectionRatio >= 0.3)
+                    {
+                        if (data_animation_type == 'fade_in')
+                        {
+                            await this.set_data_animation_type(entry, data_animation_type, 1000);
+                        }
+                        else
+                        {
+                            await this.set_data_animation_type(entry, data_animation_type);
+                        }
+                    }
+               }
+            })
+         }, { threshold: [0.0, 0.3, 0.7, 1] });
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    sleep(milliseconds) 
+    {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }
+
+    async set_data_animation_type(entry, data_animation_type, timeout = 0)
+    {
+        await this.sleep(timeout);
+        entry.target.classList.add(data_animation_type);
     }
 }
 

@@ -13,7 +13,7 @@ export default class extends AbstractView
         const html = `
             <div class="ctn_container">
                 <div class="ctn_container__item">
-                    <div class="ctn_box">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltImpressum/&gt</h1>
                         <div class="ctn_box__inner_box impressum">
                             <div class="text">

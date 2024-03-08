@@ -151,7 +151,7 @@ export default class NavigationHandler
             // const current_opacity = parseFloat(rgba_values[3]);
             const new_opacity = Math.min(scroll_offset / (1 * header_height), target_bg_opacity);
             header_container.style.backgroundColor = `rgba(${rgba_values[0]}, ${rgba_values[1]}, ${rgba_values[2]}, ${new_opacity})`;
-            header_container.style.boxShadow = `0px 0px 3px 2px rgba(0, 0, 0, ${current_box_shadow_opacity})`;
+            // header_container.style.boxShadow = `0px 0px 3px 2px rgba(0, 0, 0, ${current_box_shadow_opacity})`;
         // }
 
     }

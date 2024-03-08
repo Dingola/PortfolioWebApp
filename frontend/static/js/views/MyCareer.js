@@ -13,7 +13,7 @@ export default class extends AbstractView
         return await super.generate_html(`
             <div class="ctn_container">
                 <div class="ctn_container__item">
-                    <div class="ctn_box">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltMy Career/&gt</h1>
                         <div class="ctn_box__wrapper">
                             ${await this.generate_career_html()}
@@ -46,18 +46,23 @@ export default class extends AbstractView
     {
         let result = '';
         let career_stations = await this.fetch_career_stations();
+        let index = 0;
 
         if ((career_stations != null) && (career_stations.length != 0))
         {
-            result += `<div class="timeline border_radius">`;
+            result += `<div class="timeline border_radius"><div class="timeline__line animate" data-animation-type="timeline_scale_in_from_top"></div>`;
 
             career_stations.forEach((career_station) => {
+                index++;
+                
                 result += `	
                     <div class="timeline__block">
-                        <div class="timeline__block_point">
-                            
-                        </div>
-                        <div class="timeline__content">
+                        <div class="timeline__block_point animate" data-animation-type="scroll_scale_in">
+                        </div>`;
+    
+                result += (index % 2 == 0) ? `<div class="timeline__content animate" data-animation-type="scroll_fade_in_from_right">` : `<div class="timeline__content animate" data-animation-type="scroll_fade_in_from_left">`;
+
+                result += `
                             <div class="timeline__content_text">
                                 <div class="timline__content_block_point_date">
                                     ${this.generate_date_from_string(career_station.date_begin, career_station.date_end)}
@@ -73,10 +78,10 @@ export default class extends AbstractView
                                 <a class="link extern_icon" target="_blank" href="${career_station.organisation_link}">Webseite</a>
                             </div>
                         </div>
-                        <div class="timeline__block_point_date">
+                        <div class="timeline__block_point_date animate" data-animation-type="fade_in">
                             ${this.generate_date_from_string(career_station.date_begin, career_station.date_end)}
                         </div>
-                    </div>`
+                    </div>`;
             });
 
             result += '</div>';

@@ -9,6 +9,7 @@ export default class GalleryHandler
 
     #lightbox = null;
     #lightbox_img = null;
+    #lightbox_current_image_info_box_text = null;
     #close_btn = null;
     #prev_btn = null;
     #next_btn = null;
@@ -87,6 +88,7 @@ export default class GalleryHandler
     {
         this.set_lightbox_visible(true);
         this.#set_current_image();
+        this.#update_current_image_info() ;
     }
 
     close_lightbox()
@@ -112,11 +114,12 @@ export default class GalleryHandler
             this.#lightbox_img.classList.add('disappear_anim');
             this.#lightbox.classList.add('disappear_anim_2');
             
-            setTimeout(() => {
-                this.#lightbox.style.display = 'none';
-            }, 250);
+            // setTimeout(() => {
+            //     this.#lightbox.style.display = 'none';
+            // }, 300);
 
             setTimeout(() => {
+                this.#lightbox.style.display = 'none';
                 this.#lightbox.classList.remove('disappear_anim_2');
                 this.#lightbox_img.classList.remove('disappear_anim');
             }, 300);
@@ -141,34 +144,31 @@ export default class GalleryHandler
                 current_image_index_temp = ((this.#current_lightbox_image_index + 1) % current_image_data.images.length);
                 this.#current_lightbox_image_index = current_image_index_temp;
 
-                this.#lightbox_img.classList.add('fade_out_left_anim');
+                this.#lightbox_img.classList.add('lb_next_image');
 
                 setTimeout(() => {
-                    this.#lightbox_img.classList.remove('fade_out_left_anim');
                     this.#set_current_image();
-                    this.#lightbox_img.classList.add('fade_in_right_anim');
-                }, 250);
+                    this.#update_current_image_info();
+                }, 350);
                 
                 setTimeout(() => {
-                    this.#lightbox_img.classList.remove('fade_in_right_anim');
-                }, 700); 
+                    this.#lightbox_img.classList.remove('lb_next_image');
+                }, 700);
             }
             else
             {
                 current_image_index_temp = ((current_image_index + 1) % current_image_data.images.length);
                 this.#set_current_image_index(current_image_index_temp);
 
-                this.#img_element.classList.add('fade_out_left_anim_2');
+                this.#img_element.classList.add('next_image');
 
                 setTimeout(() => {
-                    this.#img_element.classList.remove('fade_out_left_anim_2');
                     this.#set_current_image();
-                    this.#img_element.classList.add('fade_in_right_anim_2');
-                }, 250);
-                
+                }, 350);
+
                 setTimeout(() => {
-                    this.#img_element.classList.remove('fade_in_right_anim_2');
-                }, 700); 
+                    this.#img_element.classList.remove('next_image');
+                }, 700);
             }
         }
     }
@@ -194,16 +194,15 @@ export default class GalleryHandler
                 current_image_index_temp = ((this.#current_lightbox_image_index - 1 + current_image_count) % current_image_count);
                 this.#current_lightbox_image_index = current_image_index_temp;
 
-                this.#lightbox_img.classList.add('fade_out_right_anim');
+                this.#lightbox_img.classList.add('lb_prev_image');
 
                 setTimeout(() => {
-                    this.#lightbox_img.classList.remove('fade_out_right_anim');
                     this.#set_current_image();
-                    this.#lightbox_img.classList.add('fade_in_left_anim');
-                }, 250);
+                    this.#update_current_image_info();
+                }, 350);
                 
                 setTimeout(() => {
-                    this.#lightbox_img.classList.remove('fade_in_left_anim');
+                    this.#lightbox_img.classList.remove('lb_prev_image');
                 }, 700);
             }
             else
@@ -211,16 +210,14 @@ export default class GalleryHandler
                 current_image_index_temp = ((current_image_index - 1 + current_image_count) % current_image_count);
                 this.#set_current_image_index(current_image_index_temp);
 
-                this.#img_element.classList.add('fade_out_right_anim_2');
+                this.#img_element.classList.add('prev_image');
 
                 setTimeout(() => {
-                    this.#img_element.classList.remove('fade_out_right_anim_2');
                     this.#set_current_image();
-                    this.#img_element.classList.add('fade_in_left_anim_2');
-                }, 250);
-                
+                }, 350);
+
                 setTimeout(() => {
-                    this.#img_element.classList.remove('fade_in_left_anim_2');
+                    this.#img_element.classList.remove('prev_image');
                 }, 700);
             }
         }
@@ -239,6 +236,7 @@ export default class GalleryHandler
         this.#create_lightbox();
 
         this.#lightbox = document.querySelector('.lightbox');
+        this.#lightbox_current_image_info_box_text = document.querySelector('.lightbox__current_image_info_box_text');
         this.#lightbox_img = document.querySelector('.lightbox_img');
         this.#close_btn = document.querySelector('.close_btn');
         this.#prev_btn = document.querySelector('.prev_btn');
@@ -259,6 +257,7 @@ export default class GalleryHandler
     {
         let result = `
             <div class="lightbox">
+                <div class="lightbox__current_image_info_box"><p class="lightbox__current_image_info_box_text"></p></div>
                 <button class="lightbox__btn close_btn">X</button>
                 <button class="lightbox__btn prev_btn"><img class="icon" src="static/css/resources/images/icons/ArrowLeft.svg" alt="ArrowLeft Icon"/></button>
                 <button class="lightbox__btn next_btn"><img class="icon" src="static/css/resources/images/icons/ArrowRight.svg" alt="ArrowRight Icon"/></button>
@@ -270,10 +269,22 @@ export default class GalleryHandler
         document.body.appendChild(fragment);
     }
 
+    #update_current_image_info() 
+    {
+        let gallery_data = this.#get_current_gallery_data();
+
+        if (gallery_data != null)
+        {
+            this.#lightbox_current_image_info_box_text.textContent = (this.#current_lightbox_image_index + 1) + ' / ' + gallery_data.images.length;
+        }
+    }
+
     #create_overlay(key, gallery_element, img_element)
     {
         let overlay_container = null;
         let coverlay_container_existed = false;
+        let overlay_has_btns = false;
+        let overlay_btns = null;
 
         if (gallery_element != null)
         {
@@ -285,31 +296,58 @@ export default class GalleryHandler
                 overlay_container = document.createElement('div');
                 overlay_container.classList.add('overlay_container');
             }
+            else
+            {
+                overlay_btns = overlay_container.querySelectorAll('.overlay_container__btn');
+                overlay_has_btns = (overlay_btns.length == 2);
+            }
 
-            let overlay_btn = document.createElement('button');
-            overlay_btn.classList.add('overlay_container__btn');
 
-            let image_left_icon = document.createElement('img');
-            image_left_icon.classList.add('icon');
-            image_left_icon.src = 'static/css/resources/images/icons/ArrowLeft.svg';
-            overlay_btn.appendChild(image_left_icon);
+            let overlay_btn = null;
 
-            overlay_container.appendChild(overlay_btn);
+            if (!overlay_has_btns)
+            {
+                overlay_btn = document.createElement('button');
+                overlay_btn.classList.add('overlay_container__btn');
+
+                let image_left_icon = document.createElement('img');
+                image_left_icon.classList.add('icon');
+                image_left_icon.src = 'static/css/resources/images/icons/ArrowLeft.svg';
+                overlay_btn.appendChild(image_left_icon);
+
+                overlay_container.appendChild(overlay_btn);
+            }
+            else
+            {
+                overlay_btn = overlay_btns[0];
+            }
+
             overlay_btn.addEventListener('click', (event) => {
                 this.#current_gallery_id = key;
                 this.#img_element = img_element;
                 this.show_prev_image();
             });
 
-            overlay_btn = document.createElement('button');
-            overlay_btn.classList.add('overlay_container__btn');
+            overlay_btn = null;
 
-            let image_right_icon = document.createElement('img');
-            image_right_icon.classList.add('icon');
-            image_right_icon.src = 'static/css/resources/images/icons/ArrowRight.svg';
-            overlay_btn.appendChild(image_right_icon);
+            if (!overlay_has_btns)
+            {
+                overlay_btn = document.createElement('button');
 
-            overlay_container.appendChild(overlay_btn);
+                overlay_btn.classList.add('overlay_container__btn');
+
+                let image_right_icon = document.createElement('img');
+                image_right_icon.classList.add('icon');
+                image_right_icon.src = 'static/css/resources/images/icons/ArrowRight.svg';
+                overlay_btn.appendChild(image_right_icon);
+
+                overlay_container.appendChild(overlay_btn);
+            }
+            else
+            {
+                overlay_btn = overlay_btns[1];
+            }
+
             overlay_btn.addEventListener('click', (event) => {
                 this.#current_gallery_id = key;
                 this.#img_element = img_element;
