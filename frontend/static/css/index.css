@@ -635,6 +635,14 @@ ul {
 
 /* >> UTILITY CLASSES << */
 
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block;
+}
+
 .no_newline {
     display: inline;
     white-space: nowrap;
@@ -1218,13 +1226,13 @@ span.highlight_text2 {
 }
 
 .btn {
-    padding: 0.8rem 1rem 0.8rem 1rem;
+    padding: 0.6rem 0.8rem 0.6rem 0.8rem;
     background-color: var(--btn-bg-color);
     color: var(--btn-color);
     border: solid 1px var(--btn-border-color);
     border-radius: 10px;
-    font-weight: bold;
-    font-size: 0.8rem;
+    font-weight: 700;
+    font-size: 1rem;
     transition: all 0.2s ease-in-out 0ms;
     cursor: pointer;
 
@@ -1238,6 +1246,13 @@ span.highlight_text2 {
         background-color: var(--btn-bg-color-active);
         transition: all 0.1s ease-in-out 0ms;
     }
+}
+
+.button_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
 }
 
 .profil {
@@ -1881,6 +1896,7 @@ input:checked + .slider:before {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 12px;
     width: 100%;
     padding: 1rem;

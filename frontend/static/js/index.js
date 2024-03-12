@@ -28,7 +28,7 @@ class App
         // Import components
         this.navigation_handler = new NavigationHandler();
         this.form_groups_handler = null;
-
+        
         // Define routes for the application, mapping paths to their associated views.
         this.routes = [
             { path: "/", view: this.views.Home, instance: null },
@@ -363,10 +363,42 @@ class App
         await this.sleep(timeout);
         entry.target.classList.add(data_animation_type);
     }
+
+    toggle_hidden_elements(button)
+    {
+        const parent_element = button.parentElement.parentElement;
+        let hidden_elements = parent_element.querySelectorAll('.hidden');
+        let show_elements = (hidden_elements.length > 0);
+
+        if (!show_elements)
+        {
+            hidden_elements = parent_element.querySelectorAll('.visible');
+        }
+        
+        hidden_elements.forEach(hidden_element => {
+            const computed_style = window.getComputedStyle(hidden_element);
+            const display_value = computed_style.getPropertyValue('display');
+        
+            if (display_value === 'none') 
+            {
+                hidden_element.classList.remove('hidden');
+                hidden_element.classList.add('visible');
+            } 
+            else
+            {
+                hidden_element.classList.remove('visible');
+                hidden_element.classList.add('hidden');
+            }
+        });
+
+        button.textContent = (!show_elements ? 'Show more' : 'Show less');
+    }
 }
+
+window.app = null;
 
 // Instantiate the App class when the DOM is ready.
 document.addEventListener("DOMContentLoaded", () => 
 {
-    const app = new App();
+    window.app = new App();
 });

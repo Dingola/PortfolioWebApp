@@ -14,7 +14,7 @@ export default class extends AbstractView
             <div class="ctn_container">
                 <div class="ctn_container__item">
                     <div class="profil">
-                        <div class="ctn_box animate" data-animation-type="fade_in">
+                        <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_left">
                             <div class="text">
                                 <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
                                 <p>
@@ -28,7 +28,7 @@ export default class extends AbstractView
                             </div>
                         </div>
                         <div class="profil__right_side_ctn">
-                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage animate" data-animation-type="scroll_scale_in">
+                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage animate" data-animation-type="scroll_fade_in_from_right">
                                 <img src="" loading="lazy" alt="Profil Image" class="border_circle">
                                 <div class="overlay_container" style="width:122%;"></div>
                             </div>
@@ -177,19 +177,34 @@ export default class extends AbstractView
 
     generate_skill_category_HTML(category, skills) 
     {
-        return `
+        let result = ``;
+        const index_hide_content = 4;
+
+        result = `
             <div class="skill__category">
                 <h3 class="underline_accent">${category}</h3>
                 <div class="skill__box_container">
-                    ${skills.map((skill) => this.generate_skill_HTML(skill)).join('')}
+                   ${skills.map((skill, index) => {                    
+                        return this.generate_skill_HTML(skill, (index >= index_hide_content));;
+                    }).join('')}`;
+        if (index_hide_content < skills.length)
+        {
+            result += `
+                <div class="button_wrapper">
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)" id="textButton">Show more</button>
+                </div>`;
+        }
+
+        result += `                    
                 </div>
             </div>`;
+        return result;
     }
 
-    generate_skill_HTML(skill) 
+    generate_skill_HTML(skill, hidden = false) 
     {
         return `
-            <div class="skill__box">
+            <div class="skill__box ${(hidden ? `skill__box hidden` : `skill__value_box`)}">
                 <p>${skill.subject}</p>
                 <div class="skill__value_box">
                     ${this.generate_filled_stars(skill.rating.value)}
@@ -258,14 +273,24 @@ export default class extends AbstractView
     generate_project_skills_used_html(skills_used)
     {
         let result = '';
+        let index = 0;
+        const index_hide_content = 5;
 
         skills_used.forEach((skill) => {
             result += `
-                <div class="skill__box">
+                <div class="${(index >= index_hide_content) ? `skill__box hidden` : `skill__box`}">
                     <p>${skill.subject}</p>
-                </div>
-            `;
+                </div>`;
+            index++;
         });
+
+        if (index_hide_content < skills_used.length)
+        {
+            result += `
+                <div class="button_wrapper">
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)" id="textButton">Show more</button>
+                </div>`;
+        }
 
         return result;
     }
