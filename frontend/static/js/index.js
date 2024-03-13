@@ -327,9 +327,13 @@ class App
                     else if (data_animation_type == 'header_fade_in_from_top')
                     {
                         // set timouet to 1.8s if page is home ('/') and scroll >=
-                        await this.set_data_animation_type(entry, data_animation_type, (window.scrollY >= (window.innerHeight / 3) || (this.#current_route.path != '/')) ? 0 : 1400);
+                        await this.set_data_animation_type(entry, data_animation_type, (window.scrollY >= (window.innerHeight / 3) || (this.#current_route.path != '/')) ? 0 : 400);
                     }
                     else if (data_animation_type == 'timeline_scale_in_from_top')
+                    {
+                        await this.set_data_animation_type(entry, data_animation_type);
+                    }
+                    else if (data_animation_type == `scroll_fade_in_from_btn` && (entry.intersectionRatio >= 0.1))
                     {
                         await this.set_data_animation_type(entry, data_animation_type);
                     }
@@ -346,7 +350,7 @@ class App
                     }
                }
             })
-         }, { threshold: [0.0, 0.3, 0.7, 1] });
+         }, { threshold: [0.0, 0.1, 0.3, 0.7, 1] });
 
         elements.forEach(element => {
             observer.observe(element);
