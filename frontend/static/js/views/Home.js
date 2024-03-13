@@ -35,11 +35,11 @@ export default class extends AbstractView
                             <div class="external_links_wrapper animate" data-animation-type="fade_in">
                                 <div class="external_links">
                                     <a target="_blank" href="https://github.com/Dingola">
-                                        <img src="static/css/resources/images/logos/github/github-mark/github-mark.png" alt="GitHub">
+                                        <img class="icon_git" alt="GitHub">
                                         <p>GitHub</p>
                                     </a>
                                     <a target="_blank" href="https://linkedin.com/in/adrian-helbig-b7b023251">
-                                        <img src="static/css/resources/images/logos/LinkedIn-Logos/LI-In-Bug.png" alt="LinkedIn">
+                                        <img class="icon_linkedin" alt="LinkedIn">
                                         <p>LinkedIn</p>
                                     </a>
                                 </div>
