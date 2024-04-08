@@ -12,9 +12,9 @@ class CareerModel
         this.#career_stations = [
             new CareerStation(
                 `GFaI - Gesellschaft zur Förderung angewandter Informatik e. V.`, 
-                `Wissenschaftlicher Mitarbeiter <br> (C++ / Qt Softwareentwickler)`, 
+                `Wissenschaftlicher Mitarbeiter (C++ / Qt Softwareentwickler)`, 
                 `<span class="highlight_text2">Im Forschungbereich Signalverarbeitung, in welchem ich tätig war, umfasste mein Aufgabengebiet folgendes:</span>
-                <ul>
+                <ul class="list">
                     <li>
                         Entwicklung von Softwarebausteinen in C++ 14 unter Verwendung OpenGL 4.3 / GLSL und dem Qt-Framework
                     </li>

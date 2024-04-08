@@ -56,7 +56,7 @@ export default class extends AbstractView
                 index++;
                 
                 result += `	
-                    <div class="timeline__block">
+                    <div class="timeline__block ${this.page_navigation_handler.add_page_section_link(career_station.role)}">
                         <div class="timeline__block_point animate" data-animation-type="scroll_scale_in">
                         </div>`;
     

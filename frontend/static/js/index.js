@@ -9,6 +9,7 @@ import PrivacyPolicy from "./views/PrivacyPolicy.js";
 import NavigationHandler from "./components/NavigationHandler.js";
 import FormGroupsHandler from "./components/FormGroupsHandler.js"
 import GalleryHandler from "./components/GalleryHandler.js";
+import PageNavigationHandler from "./components/PageNavigationHandler.js";
 
 class App 
 {
@@ -27,6 +28,7 @@ class App
 
         // Import components
         this.navigation_handler = new NavigationHandler();
+        this.page_navigation_handler = new PageNavigationHandler();
         this.form_groups_handler = null;
         
         // Define routes for the application, mapping paths to their associated views.
@@ -114,6 +116,7 @@ class App
         {
             view = new match.route.view(this.get_params(match));
             view.set_handler(new GalleryHandler());
+            view.set_handler(this.page_navigation_handler)
             view_html = await view.get_html();
             this.routes[match_index].instance = view;
         }
@@ -126,6 +129,7 @@ class App
         this.#current_route = this.routes[match_index];
         await this.switch_page_and_update(view_html);
         view.get_gallery_handler().setup_galleries();
+        this.page_navigation_handler.update();
         this.previous_path = match.route.path;
     }
 

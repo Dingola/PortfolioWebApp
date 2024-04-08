@@ -12,7 +12,7 @@ export default class extends AbstractView
     {
         return await super.generate_html(`
             <div class="ctn_container">
-                <div class="ctn_container__item">
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Profil')}">
                     <div class="profil">
                         <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_left">
                             <div class="text">
@@ -47,7 +47,7 @@ export default class extends AbstractView
                         </div>
                     </div>
                 </div>
-                <div class="ctn_container__item">
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('My Skills')}">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltMy Skills/&gt</h1>
                         <div class="ctn_box__wrapper">
@@ -58,7 +58,7 @@ export default class extends AbstractView
                         </div>
                     </div>
                 </div>
-                <div class="ctn_container__item">
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Projects')}">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltProjects/&gt</h1>
                         <div class="ctn_box__wrapper">
@@ -66,7 +66,7 @@ export default class extends AbstractView
                         </div>
                     </div>
                 </div>
-                <div class="ctn_container__item">
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Get In Touch')}">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltGet In Touch/&gt</h1>
                         <div class="ctn_box__wrapper">
@@ -191,7 +191,7 @@ export default class extends AbstractView
         {
             result += `
                 <div class="button_wrapper">
-                    <button class="btn" onclick="app.toggle_hidden_elements(this)" id="textButton">Show more</button>
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Show more</button>
                 </div>`;
         }
 
@@ -288,7 +288,7 @@ export default class extends AbstractView
         {
             result += `
                 <div class="button_wrapper">
-                    <button class="btn" onclick="app.toggle_hidden_elements(this)" id="textButton">Show more</button>
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Show more</button>
                 </div>`;
         }
 

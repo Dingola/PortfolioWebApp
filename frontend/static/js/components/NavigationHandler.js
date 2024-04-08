@@ -6,15 +6,15 @@ export default class NavigationHandler
     constructor() 
     {
         this.burger_toggled = false;
-        this.setup_event_listeners();
-        this.update_height();
+        this.#setup_event_listeners();
+        this.#update_height();
     }
 
-    setup_event_listeners() 
+    #setup_event_listeners() 
     {
         document.body.addEventListener('click', this.handle_click_event.bind(this));
         window.addEventListener('scroll', this.handle_scroll_event.bind(this));
-        window.addEventListener('resize', this.update_height.bind(this));
+        window.addEventListener('resize', this.#update_height.bind(this));
     }
 
     is_burger_menu_open()
@@ -119,7 +119,7 @@ export default class NavigationHandler
         document.dispatchEvent(burger_event);
     }
 
-    update_height()
+    #update_height()
     {
         const header_height = document.querySelector("header").offsetHeight;
         document.querySelector(".nav").style.height = `${header_height}px`;
@@ -175,4 +175,6 @@ export default class NavigationHandler
             }
         });
     }
+
+
 }

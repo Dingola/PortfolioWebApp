@@ -1,10 +1,12 @@
 'use strict';
 
+import PageNavigationHandler from "../components/PageNavigationHandler.js";
 import GalleryHandler from "./../components/GalleryHandler.js";
 
 export default class 
 {
     gallery_handler = null;
+    page_navigation_handler = null;
     last_loaded_html = null;
 
     constructor(params)
@@ -18,11 +20,20 @@ export default class
         {
             this.gallery_handler = handler;
         }
+        else if (handler instanceof PageNavigationHandler)
+        {
+            this.page_navigation_handler = handler
+        }
     }
 
     get_gallery_handler()
     {
         return this.gallery_handler;
+    }
+
+    get_page_navigation_handler()
+    {
+        return this.page_navigation_handler;
     }
 
     set_title(title)
