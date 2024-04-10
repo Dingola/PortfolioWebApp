@@ -70,8 +70,14 @@ export default class extends AbstractView
                                 </div>
                                 <h3>${career_station.role}</h3>
                                 <h4>${career_station.organisation}</h4>
-                                <br>
-                                <p>${career_station.description}</p>
+                                <div class="timeline__career_description">
+                                    <p>${career_station.description}</p>
+                                    ${career_station.description.length > 0 ? 
+                                        `<div class="timeline__shortened_content_overlay">
+                                            <button class="btn" onclick="app.show_shortened_content(this)">Mehr anzeigen</button>
+                                        </div>` : ``
+                                    }
+                                </div>
                                 ${this.generate_qualification_html(career_station.acquired_qualification)}
                             </div>
                             <div class="timeline__content_links">

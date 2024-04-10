@@ -345,7 +345,7 @@ class App
                     {
                         if (data_animation_type == 'fade_in')
                         {
-                            await this.set_data_animation_type(entry, data_animation_type, 1000);
+                            await this.set_data_animation_type(entry, data_animation_type, 700);
                         }
                         else
                         {
@@ -370,6 +370,23 @@ class App
     {
         await this.sleep(timeout);
         entry.target.classList.add(data_animation_type);
+    }
+
+    show_shortened_content(button)
+    {
+        const overlay_element = button.parentElement;
+        let content_element = null;
+        
+        if (overlay_element != null)
+        {
+            content_element = overlay_element.parentElement;
+            
+            if (content_element != null)
+            {
+                content_element.style.maxHeight = "none";
+                overlay_element.style.display = "none";
+            }
+        }
     }
 
     toggle_hidden_elements(button)
@@ -399,7 +416,7 @@ class App
             }
         });
 
-        button.textContent = (!show_elements ? 'Show more' : 'Show less');
+        button.textContent = (!show_elements ? 'Mehr anzeigen' : 'Weniger anzeigen');
     }
 }
 

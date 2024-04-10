@@ -191,7 +191,7 @@ export default class extends AbstractView
         {
             result += `
                 <div class="button_wrapper">
-                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Show more</button>
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Mehr anzeigen</button>
                 </div>`;
         }
 
@@ -288,7 +288,7 @@ export default class extends AbstractView
         {
             result += `
                 <div class="button_wrapper">
-                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Show more</button>
+                    <button class="btn" onclick="app.toggle_hidden_elements(this)">Mehr anzeigen</button>
                 </div>`;
         }
 

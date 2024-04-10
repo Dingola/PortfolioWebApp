@@ -8,7 +8,6 @@ export default class PageNavigationHandler
 
     #css_class_page_nav = 'page_nav';
     #css_class_toggle_btn = 'page_nav__toggle_btn';
-    #css_class_toggle_btn_icon = 'sidebar_right_open_icon';
     #css_class_toggle_btn_icon_active = 'close_icon';
     #css_class_link_list = 'page_nav__list';
     #css_class_anchor_id_part = 'section_anchor';  // e.g. section_anchor_1, section_anchor_2 .. section_anchor_n
@@ -57,12 +56,12 @@ export default class PageNavigationHandler
     #init()
     {
         let result = `
-            <div class="page_nav">
+            <div class="${this.#css_class_page_nav} animate" data-animation-type="fade_in">
                 <div class="page_nav__header">
-                    <button class="page_nav__toggle_btn page_nav_open_icon size_before_42"></button>
+                    <button class="${this.#css_class_toggle_btn} page_nav_open_icon size_before_42"></button>
                 </div>
                 <div class="page_nav__content">
-                    <ul class="page_nav__list">
+                    <ul class="${this.#css_class_link_list}">
                     </ul>
                 </div>
             </div>
@@ -86,17 +85,7 @@ export default class PageNavigationHandler
 
     #handle_toggle_btn_clicked()
     {
-        if (this.#page_nav_is_open)
-        {
-            this.#toggle_btn.classList.remove(this.#css_class_toggle_btn_icon);
-            this.#toggle_btn.classList.add(this.#css_class_toggle_btn_icon_active);
-        }
-        else
-        {
-            this.#toggle_btn.classList.add(this.#css_class_toggle_btn_icon);
-            this.#toggle_btn.classList.remove(this.#css_class_toggle_btn_icon_active);
-        }
-
+        this.#toggle_btn.classList.toggle(this.#css_class_toggle_btn_icon_active);
         this.toggle_page_navigation_visibility();
         this.#page_nav_is_open = !this.#page_nav_is_open;
     }
