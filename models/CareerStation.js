@@ -1,6 +1,6 @@
 'use strict';
 
-class CareerStation
+export default class CareerStation
 {
     constructor(organisation, role, description, organisation_link, acquired_qualification, date_begin, date_end)
     {
@@ -13,5 +13,3 @@ class CareerStation
         this.date_end = date_end;
     }
 }
-
-module.exports = CareerStation;

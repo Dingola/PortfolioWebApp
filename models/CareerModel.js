@@ -1,9 +1,9 @@
 `use strict`;
 
-const CareerStation = require("./CareerStation");
-const Skill = require("./Skill");
+import CareerStation from './CareerStation.js';
+import Skill from './Skill.js';
 
-class CareerModel
+export default class CareerModel
 {
    #career_stations;
 
@@ -103,5 +103,3 @@ class CareerModel
         return this.#career_stations;
     }
 }
-
-module.exports = CareerModel;

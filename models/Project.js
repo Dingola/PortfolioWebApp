@@ -1,6 +1,6 @@
 'use strict';
 
-class Project
+export default class Project
 {
     constructor(title, description, images, github_url, livedemo_url, skills_used)
     {
@@ -12,5 +12,3 @@ class Project
         this.skills_used = skills_used;
     }
 }
-
-module.exports = Project;

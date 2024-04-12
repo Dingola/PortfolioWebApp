@@ -1,9 +1,9 @@
 'use strict';
 
-const Project = require("./Project");
-const Skill = require("./Skill");
+import Project from './Project.js';
+import Skill from './Skill.js';
 
-class ProjectModel
+export default class ProjectModel
 {
     constructor()
     {
@@ -35,5 +35,3 @@ class ProjectModel
         return this.projects;
     }
 }
-
-module.exports = ProjectModel;

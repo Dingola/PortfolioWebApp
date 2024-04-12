@@ -1,8 +1,8 @@
 'use strict';
 
-const Rating = require("./Rating");
+import Rating from './Rating.js';
 
-class Skill
+export default class Skill
 {
     constructor(category, subject, value = 1)
     {
@@ -11,5 +11,3 @@ class Skill
         this.rating = new Rating(this.subject, value);
     }
 }
-
-module.exports = Skill;

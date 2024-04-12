@@ -1,8 +1,8 @@
 'use strict';
 
-const CareerModel = require("../models/CareerModel");
+import CareerModel from '../models/CareerModel.js';
 
-class CareerController 
+export default class CareerController 
 {
     constructor() 
     {
@@ -18,5 +18,3 @@ class CareerController
         }
     }
 }
-
-module.exports = CareerController;

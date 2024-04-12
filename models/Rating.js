@@ -1,6 +1,6 @@
 'use strict';
 
-class Rating
+export default class Rating
 {
     constructor(subject, value)
     {
@@ -8,5 +8,3 @@ class Rating
         this.value = value;
     }
 }
-
-module.exports = Rating;

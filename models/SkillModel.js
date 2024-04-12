@@ -1,9 +1,9 @@
 'use strict';
 
-const Skill = require("./Skill");
-const Rating = require("./Rating");
+import Skill from './Skill.js';
+import Rating from './Rating.js';
 
-class SkillModel
+export default class SkillModel
 {
     constructor()
     {
@@ -57,5 +57,3 @@ class SkillModel
         return this.skills;
     }
 }
-
-module.exports = SkillModel;

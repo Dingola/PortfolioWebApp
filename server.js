@@ -1,13 +1,19 @@
 'use strict';
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const config = require('./config');
-const HomeRouter = require('./routes/HomeRouter');
-const CareerRouter = require('./routes/CareerRouter');
+
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import config from './config.js';
+import HomeRouter from './routes/HomeRouter.js';
+import CareerRouter from './routes/CareerRouter.js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
+// const __dirname = import.meta.dirname;  // node.js 20.11 / 21.2
+    
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.json());
 app.use(cors());

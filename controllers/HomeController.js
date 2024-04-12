@@ -1,9 +1,9 @@
 'use strict';
 
-const SkillModel = require("../models/SkillModel");
-const ProjectModel = require("../models/ProjectModel");
+import SkillModel from '../models/SkillModel.js';
+import ProjectModel from '../models/ProjectModel.js';
 
-class HomeController 
+export default class HomeController 
 {
     constructor() 
     {
@@ -29,5 +29,3 @@ class HomeController
         }
     }
 }
-
-module.exports = HomeController;
