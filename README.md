@@ -19,6 +19,7 @@ Welcome to my Portfolio Web App! This project is built using Node.js and Express
    npm install express dotenv cors
    npm install nodemon --save-dev
    npm install body-parser
+   npm install nodemailer
    ```
 
    - [Express](https://expressjs.com/): Fast, unopinionated, minimalist web framework for Node.js.

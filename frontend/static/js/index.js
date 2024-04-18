@@ -111,8 +111,9 @@ class App
    
         let view = null;
         let view_html = null;
+        let never_loaded_before = (this.routes[match_index].instance == null);
 
-        if (this.routes[match_index].instance == null)
+        if (never_loaded_before)
         {
             view = new match.route.view(this.get_params(match));
             view.set_handler(new GalleryHandler());
@@ -131,6 +132,7 @@ class App
         view.get_gallery_handler().setup_galleries();
         this.page_navigation_handler.update();
         this.previous_path = match.route.path;
+        view.init();
     }
 
     async switch_page_and_update(page_html_content)

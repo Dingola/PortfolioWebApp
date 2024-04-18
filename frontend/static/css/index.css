@@ -50,6 +50,9 @@
     --support-color-1-100: #5abd55;
     --support-color-1-200: #6fc56a;
 
+    --support-color-2-000: #f26060;
+    --support-color-2-100: #ffacac;
+
     /* Neutral Colors */
     --neutral-color-1-000: #39383a;
     --neutral-color-1-100: #49484b;
@@ -2233,8 +2236,7 @@ input:checked + .slider:before {
 }
 
 .form__info_text {
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
+    padding: 0.7rem;
     width: 70%;
     font-size: 0.6rem;
     text-wrap: pretty;
@@ -2267,6 +2269,19 @@ input:checked + .slider:before {
         transform: translateY(3.3rem) translateX(1rem) scale(1.1);
         pointer-events: none;
     }
+}
+
+.form__error {
+    display: none;
+    align-self: end;
+    min-width: 33%;
+    margin-right: 2%;
+    margin-bottom: 3px;
+    padding: 0.1rem;
+    padding-left: 1rem;
+    background-color: var(--support-color-2-100);
+    border: 3px solid var(--support-color-2-000);
+    border-radius: 7px;
 }
 
 .form__footer {

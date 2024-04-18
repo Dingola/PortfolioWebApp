@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import config from './config.js';
 import HomeRouter from './routes/HomeRouter.js';
 import CareerRouter from './routes/CareerRouter.js';
+import ContactRouter from './routes/ContactRouter.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(express.static(__dirname + '/node_modules'));
 app.use('/api/home', HomeRouter.routes);
 app.use('/api/career', CareerRouter.routes);
+app.use('/api/contact', ContactRouter.routes);
 app.use("/static", express.static(path.resolve(__dirname, "frontend", "static")));
 
 

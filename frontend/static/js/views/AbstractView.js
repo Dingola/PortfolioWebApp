@@ -14,6 +14,8 @@ export default class
         this.params = params;
     }
 
+    init() {}
+
     set_handler(handler)
     {
         if (handler instanceof GalleryHandler)

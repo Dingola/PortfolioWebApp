@@ -7,6 +7,9 @@ const {
     PORT,
     HOST,
     HOST_URL,
+    EMAIL_SERVICE,
+    EMAIL_HOST,
+    EMAIL_PORT,
     EMAIL_USER,
     EMAIL_PASS
 } = process.env;
@@ -18,6 +21,9 @@ const config = {
     port: PORT,
     host: HOST,
     url: HOST_URL,
+    email_service: EMAIL_SERVICE,
+    email_host: EMAIL_HOST,
+    email_port: EMAIL_PORT,
     email_user: EMAIL_USER,
     email_pass: EMAIL_PASS
 };
