@@ -27,7 +27,7 @@ export default class extends AbstractView
                                 <p>
                                 <br>
                                 <h2>Kontakt:</h2>
-                                <p>E-Mail: Adrian-Helbig@outlook.com</p>
+                                <p>E-Mail: email@AdrianHelbig.de</p>
                                 <a href="/contact" class="link" data-link>Kontaktformular</a>
                                 <br><br>
                                 <h2>Datenschutz:</h2>
