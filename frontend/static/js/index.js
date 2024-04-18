@@ -15,7 +15,7 @@ class App
 {
     #current_route = null;
 
-    constructor() 
+    constructor()
     {
         // Import various views used in the application.
         this.views = {
