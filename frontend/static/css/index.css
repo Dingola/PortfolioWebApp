@@ -168,6 +168,10 @@
     --contact-link-color-hover: var(--neutral-color-1-900);
     --contact-link-bg-color-hover: var(--support-color-1-200);
     --contact-link-border-color-hover: var(--support-color-1-000);
+
+    --contact-form-result-bg-color: var(--neutral-color-1-000);
+    --contact-form-result-border-color: var(--brand-color-1-300);
+    --contact-form-result-content-bg-color: var(--neutral-color-1-100);
      
     --btn-color: var(--brand-color-1-300);
     --btn-bg-color: var(--neutral-color-1-000);
@@ -357,6 +361,10 @@
     --contact-link-color-hover: var(--neutral-color-1-900);
     --contact-link-bg-color-hover: var(--support-color-1-200);
     --contact-link-border-color-hover: var(--support-color-1-000);
+
+    --contact-form-result-bg-color: var(--neutral-color-1-900);
+    --contact-form-result-border-color: var(--brand-color-1-300);
+    --contact-form-result-content-bg-color: var(--neutral-color-1-830);
      
     --btn-color: var(--brand-color-1-100);
     --btn-bg-color: var(--neutral-color-1-900);
@@ -2080,8 +2088,8 @@ input:checked + .slider:before {
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--neutral-color-1-900);
-    border: 3px solid var(--brand-color-1-300);
+    background-color: var(--contact-form-result-bg-color);
+    border: 3px solid var(--contact-form-result-border-color);
     z-index: 10;
 }
 
@@ -2101,7 +2109,7 @@ input:checked + .slider:before {
     min-height: 30%;
     max-width: 85%;
     padding: 2rem;
-    background-color: var(--neutral-color-1-830);
+    background-color: var(--contact-form-result-content-bg-color);
     border-radius: 15px;
 }
 
