@@ -6,6 +6,7 @@ export default class extends AbstractView
     {
         super(params);
         this.set_title("PrivacyPolicy");
+        this.set_name("PrivacyPolicy");
     }
 
     async get_html() 

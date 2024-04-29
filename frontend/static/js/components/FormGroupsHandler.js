@@ -5,17 +5,36 @@ export default class FormGroupsHandler
         this.setup_event_listeners();
     }
 
-    setup_event_listeners() 
+    setup_event_listeners()
     {
         document.addEventListener('click', this.handle_form_click.bind(this));
         document.addEventListener('focusin', this.handle_form_focus.bind(this));
         document.addEventListener('focusout', this.handle_input_focus_out.bind(this));
+        document.addEventListener('input', this.handle_input.bind(this));
     }
 
     handle_form_click(event) 
     {
         const form_group = event.target.closest('.form__group');
         this.handle_form_interaction(form_group, event.target);
+    }
+
+    handle_input(event) 
+    {
+        const input_field = event.target;
+        const form_group = input_field.closest('.form__group');
+
+        if (form_group && (input_field.tagName === 'INPUT' || input_field.tagName === 'TEXTAREA')) 
+        {
+            if (input_field.value.trim() == '' && !input_field.matches(':focus')) 
+            {
+                form_group.classList.remove('js_transform_placeholder_to_label');
+            }
+            else
+            {
+                form_group.classList.add('js_transform_placeholder_to_label');
+            }
+        }
     }
 
     handle_form_focus(event) 

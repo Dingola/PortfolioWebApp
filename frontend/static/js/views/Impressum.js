@@ -6,6 +6,7 @@ export default class extends AbstractView
     {
         super(params);
         this.set_title("Impressum");
+        this.set_name("Impressum");
     }
 
     async get_html()

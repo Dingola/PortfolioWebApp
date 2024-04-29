@@ -8,11 +8,13 @@ export default class extends AbstractView
     #name = '';
     #email = '';
     #message = '';
+    #send_result_message = '';
 
     constructor(params) 
     {
         super(params);
         this.set_title("Contact");
+        this.set_name("Contact");
     }
 
     async get_html() 
@@ -35,7 +37,7 @@ export default class extends AbstractView
         return await super.generate_html(html);
     }
 
-    init() 
+    async init() 
     {
         const contact_form = document.querySelector('#contact_form');
     
@@ -62,6 +64,11 @@ export default class extends AbstractView
             this.#message = event.target.value;
         });
     }
+
+    async clear()
+    {
+        await this.hide_contact_form_result();
+    }
     
     async #handle_submit(event) 
     {
@@ -70,7 +77,7 @@ export default class extends AbstractView
         const contact_form = event.target;
         const form_data = new FormData(contact_form);
         const form_data_object = Object.fromEntries(form_data);
-    
+
         try {
             const response = await fetch('/api/contact/send_email', {
                 method: 'POST',
@@ -88,15 +95,20 @@ export default class extends AbstractView
             else 
             {
                 this.#input_name.value = '';
+                this.#input_name.dispatchEvent(new Event('input', { bubbles: true }));
                 this.#input_email.value = '';
+                this.#input_email.dispatchEvent(new Event('input', { bubbles: true }));
                 this.#input_message.value = '';
-                this.#name = '';
-                this.#email = '';
-                this.#message = '';
+                this.#input_message.dispatchEvent(new Event('input', { bubbles: true }));
+
                 this.#clear_and_hide_errors();
+                await this.toggle_contact_form_result_visiblity();
             }
         } catch(error) {
             console.error('Fehler beim Senden der E-Mail:', error);
+            this.#set_send_result_message(`Die Nachricht konnte leider nicht verschickt werden.
+            Bitte versuchen Sie es später erneut oder kontaktieren Sie mich alternativ über einen meiner Social Links.`);
+            await this.toggle_contact_form_result_visiblity();
             throw error;
         }
     }
@@ -140,9 +152,11 @@ export default class extends AbstractView
         container.innerHTML = '';
     }
 
-    #generate_contact_form() {
+    #generate_contact_form() 
+    {
         return `
             <div class="form_wrapper">
+                ${this.#generate_contact_form_result()}
                 <form id="contact_form" class="form" action="/api/contact/send_email" method="post">
                     <div class="form__group animate" data-animation-type="scroll_fade_in_from_right">
                         <label>Ihr Name *</label>
@@ -167,5 +181,93 @@ export default class extends AbstractView
                     </div>
                 </form>
             </div>`;
+    }
+
+    #generate_contact_form_result()
+    {
+        const name = this.get_name();
+
+        return `
+            <div class="contact_form_result hidden contact_form_result_anim_reverse">
+                <div class="contact_form_result__header">
+                    <button class="btn_2 close2_icon size_after_42" onclick="app.get_instance('${name}').toggle_contact_form_result_visiblity()"></button>
+                </div>
+                <div class="contact_form_result__content">
+                    <p class="contact_form_result__message">Vielen Dank! Ihre Nachricht wurde erfolgreich übermittelt.</p>
+                    <div id="contact_form_result_icon" class="hook_icon size_after_42"></div>
+                    <a class="link" href="/" data-link="">Zur Startseite</a>
+                </div>
+            </div>
+        `;
+    }
+
+    #set_send_result_message(message = "")
+    {
+        const contact_form_result = document.querySelector('.contact_form_result');
+        const message_element = contact_form_result.querySelector('.contact_form_result__message');
+        message_element.textContent = message || "Vielen Dank! Ihre Nachricht wurde erfolgreich übermittelt.";
+
+        const icon_element = contact_form_result.querySelector('#contact_form_result_icon');
+
+        if (message) 
+        {
+            icon_element.classList.replace('hook_icon', 'error_icon');
+        }
+        else 
+        {
+            icon_element.classList.replace('error_icon', 'hook_icon');
+        }
+    }
+    
+    async toggle_contact_form_result_visiblity(message = "") 
+    {
+        return new Promise((resolve, reject) => {
+            const contact_form_result = document.querySelector('.contact_form_result');
+
+            if (contact_form_result.classList.contains('hidden')) 
+            {
+                contact_form_result.classList.remove('hidden');
+                contact_form_result.classList.remove('contact_form_result_anim_reverse');
+                contact_form_result.classList.add('contact_form_result_anim');
+            } 
+            else 
+            {
+                contact_form_result.classList.remove('contact_form_result_anim');
+                contact_form_result.classList.add('contact_form_result_anim_reverse');
+
+                setTimeout(() => {
+                    contact_form_result.classList.add('hidden');
+                }, 200);
+
+                setTimeout(() => {
+                    resolve();
+                }, 500);
+            }
+        });
+    }
+
+    async hide_contact_form_result()
+    {
+        return new Promise((resolve, reject) => {
+            const contact_form_result = document.querySelector('.contact_form_result');
+
+            if (!contact_form_result.classList.contains('hidden'))
+            {
+                contact_form_result.classList.remove('contact_form_result_anim');
+                contact_form_result.classList.add('contact_form_result_anim_reverse');
+
+                setTimeout(() => {
+                    contact_form_result.classList.add('hidden');
+                }, 200);
+
+                setTimeout(() => {
+                    resolve();
+                }, 500);
+            }
+            else
+            {
+                resolve();
+            }   
+        });
     }
 }

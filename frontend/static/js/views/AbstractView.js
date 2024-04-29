@@ -5,6 +5,7 @@ import GalleryHandler from "./../components/GalleryHandler.js";
 
 export default class 
 {
+    #name = null;
     gallery_handler = null;
     page_navigation_handler = null;
     last_loaded_html = null;
@@ -14,7 +15,8 @@ export default class
         this.params = params;
     }
 
-    init() {}
+    async init() {}
+    async clear() {}
 
     set_handler(handler)
     {
@@ -26,6 +28,16 @@ export default class
         {
             this.page_navigation_handler = handler
         }
+    }
+
+    set_name(name)
+    {
+        this.#name = name;
+    }
+
+    get_name()
+    {
+        return this.#name;
     }
 
     get_gallery_handler()

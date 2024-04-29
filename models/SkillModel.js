@@ -33,6 +33,7 @@ export default class SkillModel
             new Skill('Development Tools and Build Systems', 'MSVC', 2),
             new Skill('Development Tools and Build Systems', 'VS Code', 2),
             new Skill('Development Tools and Build Systems', 'Jira', 2),
+            new Skill('Development Tools and Build Systems', 'Github Copilot', 2),
             new Skill('Development Tools and Build Systems', 'SVN', 1),
             new Skill('Development Tools and Build Systems', 'LabVIEW', 2),
             new Skill('Development Tools and Build Systems', 'Maven', 1),

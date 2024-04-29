@@ -6,6 +6,7 @@ export default class extends AbstractView
     {
         super(params);
         this.set_title("Home");
+        this.set_name("Home");
     }
 
     async get_html() 

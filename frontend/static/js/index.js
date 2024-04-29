@@ -53,7 +53,15 @@ class App
         // Add an event listener to handle changes in the browser's history (e.g., back/forward buttons).
         window.addEventListener("popstate", this.router.bind(this));
 
-        document.body.addEventListener("click", this.handle_click_event.bind(this));
+        document.body.addEventListener("click", async (event) => {
+            if (this.isHandlingClick) 
+            {
+                return;
+            }
+            this.isHandlingClick = true;
+            await this.handle_click_event(event);
+            this.isHandlingClick = false;
+        });
         window.addEventListener('resize', this.handle_resize.bind(this));
 
         let theme_to_set = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -63,31 +71,33 @@ class App
         this.router();
     }
 
+    get_instance(name)
+    {
+        for (const route of this.routes) 
+        {
+            if (route.instance != null) 
+            {
+                if (route.instance.get_name() === name)
+                {
+                    return route.instance;
+                }
+            }
+        }
+        
+        return null;
+    }
+
     handle_resize()
     {
         this.set_content_blur_enabled(this.navigation_handler.is_burger_menu_open() && this.navigation_handler.is_burger_visible());
     }
 
-    #compare_paths(previous_path, current_path)
+    #compare_paths(previous_path, current_path) 
     {
-        var result = -1;
         const previous_index = this.routes.findIndex(route => route.path === previous_path);
         const current_index = this.routes.findIndex(route => route.path === current_path);
 
-        if (previous_index < current_index) 
-        {
-            result = 0;
-        } 
-        else if (previous_index > current_index) 
-        {
-            result = 1;
-        } 
-        else if (previous_index == current_index && !(previous_index === -1 || current_index === -1))
-        {
-            result = 2;
-        }
-
-        return result;
+        return previous_index < current_index ? 0 : previous_index > current_index ? 1 : 2;
     }
 
     async router() 
@@ -100,7 +110,7 @@ class App
 
         const match_index = potential_matches.findIndex(potential_match => potential_match.result !== null);
         const match = match_index !== -1 ? potential_matches[match_index] : { route: this.routes[0], result: [location.pathname] };
-   
+           
         let view = null;
         let view_html = null;
         let never_loaded_before = (this.routes[match_index].instance == null);
@@ -144,29 +154,35 @@ class App
             }
             else 
             {
-                if (this.previous_path !== -1 && direction !== -1) 
-                {
-                    if (is_left_to_right) 
+                if (direction == 0) // left to right
+                {   
+                    page_right.innerHTML = page_html_content;
+
+                    if (this.data_link_clicked)
                     {
-                        page_right.innerHTML = page_html_content;
-                    } 
-                    else 
-                    {
-                        app.style.left = "-100%";
-                        page_right.innerHTML = page_left.innerHTML;
-                        page_left.innerHTML = page_html_content;
-                    }
-                
-                    if (this.data_link_clicked) 
-                    {
-                        const targetPage = is_left_to_right ? page_right : page_left;
-                        const transition_spacer = targetPage.querySelector('.transition_spacer');
+                        transition_spacer = page_right.querySelector('.transition_spacer');
                         transition_spacer.style.height = offset + 'px';
                         transition_spacer.style.display = "block";
                     }
-                
+
                     app.classList.add("app__page_transition");
-                    app.style.transform = (is_left_to_right ? "translateX(-50%)" : "translateX(50%)");
+                    app.style.transform = "translateX(-50%)";
+                }
+                else if (direction == 1) // right to left
+                {                
+                    app.style = "left: -100%;";
+                    page_right.innerHTML = page_left.innerHTML;
+                    page_left.innerHTML = page_html_content;
+
+                    if (this.data_link_clicked)
+                    {
+                        transition_spacer = page_left.querySelector('.transition_spacer');
+                        transition_spacer.style.height = offset + 'px';
+                        transition_spacer.style.display = "block";
+                    }
+
+                    app.classList.add("app__page_transition");
+                    app.style.transform = "translateX(50%)";
                 }
             }
 
@@ -224,7 +240,7 @@ class App
         }, {});
     }
 
-    handle_click_event(event) 
+    async handle_click_event(event) 
     {
         if (event.target.matches("[theme-switch"))
         {
@@ -234,11 +250,11 @@ class App
         {
             this.data_link_clicked = true;
             event.preventDefault();
-            this.navigate_to(event.target.href);
+            await this.navigate_to(event.target.href);
         }
     }
 
-    navigate_to(url)
+    async navigate_to(url)
     {
         const elements = document.querySelectorAll('.animate')
         let animation_attribute = null;
@@ -257,11 +273,12 @@ class App
 
         if ((page_left != null) && (this.#current_route.instance != null))
         {
+            await this.#current_route?.instance.clear();
             this.#current_route.instance.set_last_loaded_html(page_left.innerHTML);
         }
 
         history.pushState(null, null, url);
-        this.router();
+        await this.router();
     }
 
     set_content_blur_enabled(enabled)
@@ -342,17 +359,23 @@ class App
         }
     }
 
-    toggle_hidden_elements(button) 
+    toggle_hidden_elements(button)
     {
-        const parent_element = button?.parentElement?.parentElement;
-        const hidden_elements = parent_element?.querySelectorAll(show_elements ? '.hidden' : '.visible') || [];
-    
-        hidden_elements.forEach(hidden_element => {
+        const parent_element = button.parentElement.parentElement;
+        let hidden_elements = parent_element.querySelectorAll('.hidden');
+        let show_elements = (hidden_elements.length > 0);
+
+        if (!show_elements)
+        {
+            hidden_elements = parent_element.querySelectorAll('.visible');
+        }
+        
+        hidden_elements.forEach(hidden_element => {        
             hidden_element.classList.toggle('hidden');
             hidden_element.classList.toggle('visible');
         });
-    
-        button.textContent = hidden_elements.length ? 'Mehr anzeigen' : 'Weniger anzeigen';
+
+        button.textContent = (!show_elements ? 'Mehr anzeigen' : 'Weniger anzeigen');
     }
 }
 

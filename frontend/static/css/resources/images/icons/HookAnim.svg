@@ -1,0 +1,23 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>.Vector_31_93 {
+	animation: 0.5s linear 0s 1 normal forwards running Vector_31_93;
+		width: 40px;
+		opacity: 0.1;
+}
+@keyframes Vector_31_93 {
+	0% {
+		width: 40px;
+		opacity: 0.1;
+	}
+	100% {
+		opacity: 1;
+		width: 40px;
+	}
+}
+</style>
+<g clip-path="url(#clip_0_740)" width="48" height="48" data-name="Hook">
+	<path d="M19.5918 40L0 26.6667L5.71429 17.2549L16.3265 25.098L31.0204 0L40 7.05882L19.5918 40Z" fill="#42B53E" data-name="Vector 31" class="Vector_31_93" transform="translate(4 4)"/>
+</g>
+<defs><clipPath id="clip_0_740"><rect width="48" height="48"/></clipPath>
+</defs>
+</svg>

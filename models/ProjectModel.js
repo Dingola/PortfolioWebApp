@@ -15,7 +15,7 @@ export default class ProjectModel
                 'https://github.com/Dingola/PortfolioWebApp', 
                 '',
                 [new Skill('', 'Express'), new Skill('', 'nodeJS'), new Skill('', 'dotenv'), new Skill('', 'cors'), new Skill('', 'nodemon'), new Skill('', 'body-parser'),
-                 new Skill('', 'JavaScript'),  new Skill('', 'CSS'),  new Skill('', 'HTML'),  new Skill('', 'VS Code'),  new Skill('', 'Git')]
+                 new Skill('', 'JavaScript'),  new Skill('', 'CSS'),  new Skill('', 'HTML'),  new Skill('', 'VS Code'),  new Skill('', 'Git'), new Skill('Development Tools and Build Systems', 'Figma', 1)]
             )
         ];
     }
