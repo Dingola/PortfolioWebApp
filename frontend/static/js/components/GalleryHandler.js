@@ -41,7 +41,11 @@ export default class GalleryHandler
                     }
 
                     img_element.classList.add('current_img');
-                    this.#create_overlay(key, gallery_element, img_element);
+
+                    if (value.images.length > 1) 
+                    {
+                        this.#create_overlay(key, gallery_element, img_element);
+                    }
                     
                     img_element.src = value.images[value.current_image_index];
                     img_element.addEventListener('click', (event) => {
@@ -233,7 +237,12 @@ export default class GalleryHandler
 
     #init_lightbox()
     {
-        this.#create_lightbox();
+        this.#lightbox = document.querySelector('.lightbox');
+
+        if (this.#lightbox == null)
+        {
+            this.#create_lightbox();
+        }
 
         this.#lightbox = document.querySelector('.lightbox');
         this.#lightbox_current_image_info_box_text = document.querySelector('.lightbox__current_image_info_box_text');

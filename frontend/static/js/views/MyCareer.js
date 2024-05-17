@@ -51,7 +51,7 @@ export default class extends AbstractView
 
         if ((career_stations != null) && (career_stations.length != 0))
         {
-            result += `<div class="timeline border_radius"><div class="timeline__line animate" data-animation-type="timeline_scale_in_from_top"></div>`;
+            result += `<div class="timeline"><div class="timeline__line animate" data-animation-type="timeline_scale_in_from_top"></div>`;
 
             career_stations.forEach((career_station) => {
                 index++;
@@ -71,14 +71,16 @@ export default class extends AbstractView
                                 </div>
                                 <h3>${career_station.role}</h3>
                                 <h4>${career_station.organisation}</h4>
-                                <div class="timeline__career_description">
-                                    <p>${career_station.description}</p>
-                                    ${career_station.description.length > 0 ? 
-                                        `<div class="timeline__shortened_content_overlay">
-                                            <button class="btn" onclick="app.show_shortened_content(this)">Mehr anzeigen</button>
-                                        </div>` : ``
-                                    }
-                                </div>
+                                ${career_station.description.length > 0 ?
+                                    `<div class="timeline__career_description">
+                                        <p>${career_station.description}</p>
+                                        ${career_station.description.length > 0 ? 
+                                            `<div class="timeline__shortened_content_overlay">
+                                                <button class="btn" onclick="app.show_shortened_content(this)">Mehr anzeigen</button>
+                                            </div>` : ``
+                                        }
+                                    </div>` : ``
+                                }
                                 ${this.generate_qualification_html(career_station.acquired_qualification)}
                             </div>
                             <div class="timeline__content_links">

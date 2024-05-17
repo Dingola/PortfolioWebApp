@@ -9,30 +9,79 @@ export default class extends AbstractView
         this.set_name("Home");
     }
 
+    async init()
+    {
+        const skill__categories = document.querySelectorAll(".skill__category");
+        const max = 20;
+        const scale = 1.1;
+        const speed = 1500;
+        const axis = "x";
+        const glare = true;
+        const max_glare = 0.2;
+        const reverse = true;
+
+        if (skill__categories !== null)
+        {
+            if (skill__categories.length == 3)
+            {
+                VanillaTilt.init(skill__categories[0], {
+                    max: max,
+                    scale: scale,
+                    speed: speed,
+                    axis: axis,
+                    glare: glare,
+                    "max-glare": max_glare,
+                    reverse: reverse,
+                    startX: 20
+                });
+                VanillaTilt.init(skill__categories[1], {
+                    max: 10,
+                    scale: scale,
+                    speed: speed,
+                    axis: axis,
+                    glare: glare,
+                    "max-glare": max_glare,
+                    reverse: reverse
+                });
+                VanillaTilt.init(skill__categories[2], {
+                    max: max,
+                    scale: scale,
+                    speed: speed,
+                    axis: axis,
+                    glare: glare,
+                    "max-glare": max_glare,
+                    reverse: reverse,
+                    startX: -20
+                });
+            }
+            else
+            {
+                VanillaTilt.init(skill__categories, {
+                    max: max,
+                    scale: scale,
+                    speed: speed,
+                    axis: axis,
+                    glare: glare,
+                    "max-glare": max_glare,
+                    reverse: reverse
+                });
+            }
+        }
+    }
+
     async get_html() 
     {
         return await super.generate_html(`
             <div class="ctn_container">
-                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Profil')}">
-                    <div class="profil">
-                        <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_left">
-                            <div class="text">
-                                <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
-                                <p>
-                                    ein 34-jähriger <span class="highlight_text2">Berliner Softwareentwickler</span> mit einem Bachelor-Abschluss 
-                                    in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und einer 
-                                    erworbenen dreijährigen Berufserfahrung in diesem Feld. <br><br> Insbesondere spezialisiert habe ich mich
-                                    auf die Entwicklung von <span class="highlight_text2">C++, Qt/QML-Desktop-Anwendungen</span>. Dies ist jedoch
-                                    nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
-                                    <a href="/career" class="link" data-link>Laufbahn</a><a href="/contact" class="contact_link" data-link>Kontakt</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="profil__right_side_ctn">
-                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg', 'static/css/resources/images/Profilimages/Profilimage_2.jpg'])}" class="profilimage animate" data-animation-type="scroll_fade_in_from_right">
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Welcome')}">
+                    <div class="ctn_box flex_center animate" data-animation-type="scroll_fade_in_from_left">
+                        <div class="welcome">
+                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/Profilimages/Profilimage.jpg'])}" class="profilimage animate" data-animation-type="scroll_fade_in_from_right">
                                 <img src="" loading="lazy" alt="Profil Image" class="border_circle">
                                 <div class="overlay_container" style="width:122%;"></div>
                             </div>
+                            <h1>Hi, ich bin <span class="highlight_text">Adrian Helbig</span></h1>
+                            <h2>ein <span class="highlight_text">Berliner C++ Softwareentwickler</span></h2>
                             <div class="external_links_wrapper animate" data-animation-type="fade_in">
                                 <div class="external_links">
                                     <a target="_blank" href="https://github.com/Dingola">
@@ -48,14 +97,34 @@ export default class extends AbstractView
                         </div>
                     </div>
                 </div>
+                <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('About Me')}">
+                    <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
+                        <h1 class="line_accent">&ltÜber mich/&gt</h1>
+                        <div class="about_me">
+                            <div>
+                                <p>
+                                mit einem Bachelor-Abschluss in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und einer 
+                                erworbenen dreijährigen Berufserfahrung in diesem Feld. <br><br> Insbesondere spezialisiert habe ich mich
+                                auf die Entwicklung von <span class="highlight_text2">C++, Qt/QML-Desktop-Anwendungen</span>. Dies ist jedoch
+                                nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
+                                <div class="layout_0 margin_0"><a href="/career" class="link" data-link>Laufbahn</a><a href="/contact" class="contact_link" data-link>Kontakt</a></div>
+                                </p>
+                            </div>
+                            <div id="${this.gallery_handler.create_gallery(['static/css/resources/images/7.png'])}" class="image_wrapper"> 
+                                <img src="static/css/resources/images/7.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('My Skills')}">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltMy Skills/&gt</h1>
                         <div class="ctn_box__wrapper">
-                            <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
-                            <div class="ctn_box__inner_box">
-                                ${await this.generate_skill_html()}
+                            <div style="display: flex;justify-content: space-between;">
+                                <p>Übersicht meiner IT-Kenntnisse aus Studium und Berufspraxis:</p>
+                                ${await this.generate_skill_legend_html()}
                             </div>
+                            ${await this.generate_skill_html()}
                         </div>
                     </div>
                 </div>
@@ -63,23 +132,25 @@ export default class extends AbstractView
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltProjects/&gt</h1>
                         <div class="ctn_box__wrapper">
-                            ${await this.generate_projects_html()}
+                            ${await this.generate_projects_html()}                       
                         </div>
                     </div>
                 </div>
                 <div class="ctn_container__item ${this.page_navigation_handler.add_page_section_link('Get In Touch')}">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltGet In Touch/&gt</h1>
-                        <div class="ctn_box__wrapper">
-                            <div class="ctn_box__inner_box">
-                                <div class="section_contact">
-                                    <p class="text">Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
-                                    <a href="/contact" class="contact_link" data-link>Kontakt</a>
-                                    <p class="text">oder erfahren Sie mehr über mich</p>
-                                    <a href="/career" class="link" data-link>Laufbahn</a>
+
+                        <div class="get_in_touch">
+                            <p class="text_center">Wenn Sie eine Frage haben oder an einer Zusammenarbeit interessiert sind, kontaktieren Sie mich gerne. Ich freue mich darauf, von Ihnen zu hören.</p>
+                            <div class="flex_inline_hcenter">
+                                <div class="container">
+                                    <div class="container__item layout_0">
+                                        <a href="/contact" class="contact_link" data-link>Kontakt</a><a href="/career" class="link" data-link>Laufbahn</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -122,6 +193,19 @@ export default class extends AbstractView
         }
     }
 
+    async generate_skill_legend_html()
+    {
+        return `<div class="skill__box skill__box--legend">
+                    <p>Beginner</p>
+                    <div class="skill__value_box">
+                        <div class="skill__value_box_item skill__value_box_item_filled"></div>
+                        <div class="skill__value_box_item skill__value_box_item_filled"></div>
+                        <div class="skill__value_box_item skill__value_box_item_filled"></div>
+                    </div>
+                    <p>Expert</p>
+                </div>`;
+    }
+
     async generate_skill_html() 
     {
         let result = '';
@@ -134,18 +218,7 @@ export default class extends AbstractView
         else 
         {
             result += `
-                <div class="skill">
-                    <div class="skill__category">
-                        <div class="skill__box skill__box--legend">
-                            <p>Beginner</p>
-                            <div class="skill__value_box">
-                                <div class="skill__value_box_item skill__value_box_item_filled"></div>
-                                <div class="skill__value_box_item skill__value_box_item_filled"></div>
-                                <div class="skill__value_box_item skill__value_box_item_filled"></div>
-                            </div>
-                            <p>Expert</p>
-                        </div>
-                    </div>`;
+                <div class="skill">`;
 
             const skills_object = this.group_skills_by_category(skills_array);
 
@@ -179,11 +252,11 @@ export default class extends AbstractView
     generate_skill_category_HTML(category, skills) 
     {
         let result = ``;
-        const index_hide_content = 4;
+        const index_hide_content = 6;
 
         result = `
             <div class="skill__category">
-                <h3 class="underline_accent">${category}</h3>
+                <h3 class="underline_accent text_center">${category}</h3>
                 <div class="skill__box_container">
                    ${skills.map((skill, index) => {                    
                         return this.generate_skill_HTML(skill, (index >= index_hide_content));;
@@ -236,30 +309,30 @@ export default class extends AbstractView
         } 
         else 
         {
-            result += `<div class="project_cards">`;
+            result += `<div class="projects">`;
 
             project_array.forEach((project) => {
                 result += `	
-                    <div class="card card--width min_height_1 border_radius">
-                        <div class="card__container_left">
+                    <div class="card project">
+                        <div class="card__element" style="flex-basis: 100%">
                             <div id="${this.gallery_handler.create_gallery(project.images)}" class="card__img_wrapper">
                                 <img src="" loading="lazy" class="card__img">
                             </div>
                         </div>
-                        <div class="card__container_right">
-                            <div class="card__description">
-                                <div class="text">
-                                    <h2>${project.title}</h2>
-                                    <p>${project.description}</p>
-                                </div>
-                            </div>
-                            <div class="card__links">
-                                <a class="link extern_icon" target="_blank" href="${project.github_url}">GitHub</a>
-                                <a class="link extern_icon" target="_blank" href="${project.livedemo_url}">Live Demo</a>
-                            </div>
+                        <div class="card__element project__description">
+                            <h2>${project.title}</h2>
+                            <p>${project.description}</p>
+                        </div>
+                        <div class="card__element layout_2">
+                            <div>
+                            <h3>Tech Stack:</h2>
                             <div class="card__skills">
-                                <h3>Tech Stack:</h2>
                                 ${this.generate_project_skills_used_html(project.skills_used)}
+                            </div>
+                            </div>
+                            <div class="project__links layout_0">
+                                <a class="link" target="_blank" href="${project.github_url}">GitHub</a>
+                                <a class="link" target="_blank" href="${project.livedemo_url}">Demo</a>
                             </div>
                         </div>
                     </div>`

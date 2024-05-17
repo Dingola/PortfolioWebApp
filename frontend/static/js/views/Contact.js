@@ -24,8 +24,8 @@ export default class extends AbstractView
                 <div class="ctn_container__item">
                     <div class="ctn_box animate" data-animation-type="scroll_fade_in_from_btn">
                         <h1 class="line_accent">&ltContact/&gt</h1>
-                        <div class="ctn_box__wrapper">
-                            <div class="ctn_box__inner_box">
+                        <div class="container">
+                            <div class="container__item">
                                 ${this.#generate_contact_form()}
                             </div>
                         </div>
