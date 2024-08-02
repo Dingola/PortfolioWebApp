@@ -103,8 +103,8 @@ export default class extends AbstractView
                         <div class="about_me">
                             <div>
                                 <p>
-                                mit einem Bachelor-Abschluss in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und einer 
-                                erworbenen dreijährigen Berufserfahrung in diesem Feld. <br><br> Insbesondere spezialisiert habe ich mich
+                                Mit einem Bachelor-Abschluss in Angewandter Informatik, einer Leidenschaft für die benutzerfreundliche Anwendungsentwicklung und 
+                                dreijähriger Berufserfahrung in der Branche habe ich vielfältige Erfahrungen gesammelt. <br><br> Insbesondere spezialisiert habe ich mich
                                 auf die Entwicklung von <span class="highlight_text2">C++, Qt/QML-Desktop-Anwendungen</span>. Dies ist jedoch
                                 nicht meine ausschließliche Präferenz, wie dieses Portfolio zeigt. <br><br> Viel Spaß beim Erkunden!<br>
                                 <div class="layout_0 margin_0"><a href="/career" class="link" data-link>Laufbahn</a><a href="/contact" class="contact_link" data-link>Kontakt</a></div>

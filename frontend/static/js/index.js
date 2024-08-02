@@ -39,7 +39,7 @@ class App
             { path: "/impressum", view: this.views.Impressum, instance: null },
             { path: "/privacy_policy", view: this.views.PrivacyPolicy, instance: null }
         ];
-
+    
         this.previous_path = -1;
         this.data_link_clicked = false;
 

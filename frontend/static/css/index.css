@@ -823,7 +823,8 @@ select:focus, textarea:focus {
 .app_wrapper {
     position: relative;
     overflow-x: hidden; /* don't add this to body tag else scrollTo will not work */
-    z-index: 1;    
+    background-color: var(--bg-color-0-3);
+    z-index: 1;
 }
 
 .app {
