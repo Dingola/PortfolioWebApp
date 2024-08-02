@@ -188,6 +188,7 @@
 
     --underline-accent-bg-color: var(--bg-color-0-4);
 
+    --ctn_container-bg-color: var(--bg-color-0-1);
     --ctn-container-item-1n-bg-color: var(--bg-color-0-3);
     --ctn-container-item-2n-bg-color: var(--bg-color-0-3);
     --ctn_container-item-bottom-border-color: var(--brand-color-1-400);
@@ -1222,10 +1223,11 @@ span.highlight_text2 {
     display: flex;
     flex-direction: column;
     align-content: flex-start;
-    gap: 2px;
+    gap: 1px;
     align-items: center;
     width: 100%;
     overflow: hidden;
+    background-color: var(--ctn_container-bg-color);
 }
 
 .ctn_box {
