@@ -69,6 +69,49 @@ class App
         this.navigation_handler.adjust_main_nav_background();  /* header_container_bg_color opacity set to 0 */
 
         this.router();
+        this.init_custom_cursor();
+    }
+
+    init_custom_cursor()
+    {
+        const cursor = document.querySelector('.cursor');
+
+        const edit_cursor = function (event) {
+            const { clientX: x, clientY: y } = event;
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+        };
+
+        const show_cursor = function () {
+            cursor.classList.add('cursor--hovered');
+        };
+
+        const hide_cursor = function () {
+            cursor.classList.remove('cursor--hovered');
+        };
+
+        const check_cursor_style = function (event) {
+            const tgt = event.target;
+            const computed = window.getComputedStyle(tgt)["cursor"];
+
+            if (computed !== 'none')
+            {
+                show_cursor();
+            }
+            else
+            {
+                hide_cursor();
+            }
+        };
+
+        document.addEventListener('mousemove', (event) => {
+            edit_cursor(event);
+            check_cursor_style(event);
+        });
+
+        document.addEventListener('mouseleave', () => {
+            hide_cursor();
+        });
     }
 
     get_instance(name)
