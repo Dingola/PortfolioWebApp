@@ -306,7 +306,7 @@
 html,
 body {
     height: 100%;
-    cursor: none;
+    /*cursor: none;*/
 }
 
 html {
@@ -1865,7 +1865,7 @@ input:checked + .slider:before {
 .projects {
     display: grid;
     align-items: flex-start;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+    /*grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));*/
     gap: 1rem;
 }
 

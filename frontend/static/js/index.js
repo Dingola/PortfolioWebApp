@@ -69,7 +69,7 @@ class App
         this.navigation_handler.adjust_main_nav_background();  /* header_container_bg_color opacity set to 0 */
 
         this.router();
-        this.init_custom_cursor();
+        //this.init_custom_cursor();
     }
 
     init_custom_cursor()
