@@ -30,7 +30,7 @@ export default class CareerModel
                         <p>Entwicklung eines Datenmodells für eine Reporting-Software</p>
                     </li>
                     <li>
-                        <p>Entwicklung und Anpassung einer grafischen Benutzeroberfläche für eine Reportingsoftware für akustische Karten</p>
+                        <p>Entwicklung und Anpassung einer grafischen Benutzeroberfläche für eine Reportingsoftware für akustische Karten  <br><br>Das Projekt ist <a target="_blank" href="https://www.gfaitech.com/de/produkte/akustische-kamera/software-noiseimage/noiseimage-conclusions">hier</a> zu finden.</p>
                     </li>
                 </ul>`,
                 `https://www.gfai.de/`,
