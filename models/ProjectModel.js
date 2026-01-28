@@ -11,7 +11,7 @@ export default class ProjectModel
             new Project(
                 'Qt Log Viewer', 
                 'Qt-LogViewer ist eine moderne Desktop-Anwendung zur komfortablen Anzeige, Suche und Filterung von Logdateien. Die Anwendung wurde mit Qt und C++ entwickelt und bietet eine benutzerfreundliche Oberfläche, mit der sich Logdaten effizient durchsuchen und analysieren lassen. Zu den Funktionen gehören praktische Filtermöglichkeiten, eine übersichtliche Tabellenansicht sowie die Möglichkeit, mehrere Logdateien gleichzeitig zu laden und zu vergleichen. Das aktuell unterstützte Logformat ist flexibel und kann bei Bedarf erweitert werden. Zusätzlich lassen sich Sprache und Design der Anwendung über einen integrierten Einstellungsdialog individuell anpassen. Qt-LogViewer ist plattformübergreifend auf Windows, Linux und macOS nutzbar und eignet sich ideal für Entwickler, Administratoren und alle, die Logdateien schnell und intuitiv auswerten möchten.', 
-                ['static/css/resources/images/QtLogViewerPorject/Qt-LogViewer.png'],
+                ['static/css/resources/images/QtLogViewerPorject/Qt-LogViewer.png', 'static/css/resources/images/QtLogViewerPorject/Qt-LogViewer_2.png', 'static/css/resources/images/QtLogViewerPorject/StartPage.png'],
                 'https://github.com/Dingola/Qt-LogViewer', 
                 'https://github.com/Dingola/Qt-LogViewer',
                 [new Skill('', 'C++', 3), new Skill('', 'Qt6', 3), new Skill('', 'CMake', 2), new Skill('', 'MSVC', 2), new Skill('', 'Git', 2), new Skill('', 'Doxygen', 2), new Skill('', 'GoogleTest', 2)]
